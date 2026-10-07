@@ -1,0 +1,26 @@
+name: Request a CSV cleanup quote
+description: Describe a small CSV task using fictional examples only.
+title: "[Quote] "
+body:
+  - type: markdown
+    attributes:
+      value: "Use fictional examples only. Do not upload customer records, credentials or payment details. This is a quote request, not a paid order."
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Input and required output
+      description: "Approximate row/column count, encoding, transformation, duplicate rule and deadline."
+    validations:
+      required: true
+  - type: textarea
+    id: fictional-example
+    attributes:
+      label: Fictional example
+      description: "A few made-up rows and the desired result."
+  - type: checkboxes
+    id: public-data
+    attributes:
+      label: Public information
+      options:
+        - label: "I have included no private records, credentials or payment details."
+          required: true

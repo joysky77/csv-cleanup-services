@@ -1,0 +1,18 @@
+{
+  "tool_version": "1.0.0",
+  "input_encoding": "utf-8-sig",
+  "input_records": 5,
+  "output_records": 4,
+  "duplicate_records_removed": 1,
+  "duplicate_locations": [
+    {
+      "record": 2,
+      "ending_csv_line": 3
+    }
+  ],
+  "trimmed_cells": 1,
+  "deduplication_rule": "All columns equal after trimming surrounding whitespace",
+  "financial_values": "Preserved as text; no amounts inferred, summed, or merged",
+  "spreadsheet_protection": "Leading = + - @ and control-character cells receive an apostrophe in the output CSV",
+  "spreadsheet_cells_protected": 1
+}
