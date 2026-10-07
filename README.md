@@ -37,3 +37,10 @@ Local verification passed for BOM/Chinese text, quoted commas, duplicate counts,
 现有演示只删除全字段完全一致的重复行。按订单号等业务字段判重，需要先确认规则，不能直接按姓名删除记录。金额保留原文本，不猜测日期或金额含义。
 
 公开询价请只提供行列数量、问题说明、输出要求和虚构样例。不要上传客户资料或收款信息。需求、验收条件和交付时间确认后才接受订单；当前没有已成交客户。
+
+
+## Fixed-scope paid intake
+
+A separate [US$29 small-CSV offer](https://moltgate.com/yangy0077/clean-one-small-csv-and-explain-every-change/) is now available through Moltgate: at most 25 data rows, 10 columns and a 2,000-character plain-text request. Use fictional or redacted data. It includes the cleaned CSV, a change report and an explanation; delivery is within 3 business days after complete in-scope input, with one correction requested within 7 days. Read the published scope before checkout. Moltgate processes the buyer payment; this listing has no confirmed sales yet.
+
+另有[29美元小型CSV整理入口](https://moltgate.com/yangy0077/clean-one-small-csv-and-explain-every-change/)：最多25条数据行、10列，整条纯文本请求不超过2000字符。只提交虚构或脱敏数据，范围与交付条件以该页面为准。此服务已发布，尚无已确认成交。
