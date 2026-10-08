@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CSV Desk cleans small CSV files locally in your browser and exports a clear change report.">
+  <title>CSV Desk — Private, offline CSV cleanup</title>
+  <style>
+    :root { color-scheme: light; --ink:#10251f; --muted:#52635e; --paper:#f6f3eb; --card:#fffdf7; --accent:#146b52; --line:#d8ded8; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+    main { width:min(1080px,calc(100% - 32px)); margin:auto; }
+    .hero { display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center; padding:72px 0 48px; }
+    .eyebrow { color:var(--accent); font-weight:750; letter-spacing:.08em; text-transform:uppercase; font-size:.78rem; }
+    h1 { font-size:clamp(2.55rem,7vw,5.2rem); line-height:.98; letter-spacing:-.055em; margin:.35rem 0 1.2rem; }
+    .lead { font-size:1.2rem; color:var(--muted); max-width:650px; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin:28px 0 12px; }
+    .button { display:inline-block; padding:13px 20px; border-radius:8px; text-decoration:none; font-weight:700; }
+    .primary { color:white; background:var(--accent); }
+    .secondary { color:var(--ink); border:1px solid var(--line); background:var(--card); }
+    .note { color:var(--muted); font-size:.9rem; }
+    .shot { width:100%; border:1px solid var(--line); border-radius:16px; box-shadow:0 18px 50px #173c2d24; background:white; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:28px 0 64px; }
+    .card { padding:22px; background:var(--card); border:1px solid var(--line); border-radius:12px; }
+    .card h2 { margin:0 0 8px; font-size:1.05rem; }
+    .card p { margin:0; color:var(--muted); }
+    .limits { border-top:1px solid var(--line); padding:36px 0 64px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+    .limits h2 { margin-top:0; }
+    ul { padding-left:1.2rem; }
+    footer { color:var(--muted); border-top:1px solid var(--line); padding:22px 0 36px; font-size:.88rem; }
+    @media (max-width:760px) { .hero,.limits { grid-template-columns:1fr; gap:28px; } .hero { padding-top:44px; } .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">CSV Desk 1.0.0 · one-time $9</div>
+        <h1>Clean CSV files without uploading them.</h1>
+        <p class="lead">Open one HTML file in Microsoft Edge, review every change, then save a separate cleaned CSV and JSON report. Your data stays on your computer.</p>
+        <div class="actions">
+          <a class="button primary" href="https://joysky7777.itch.io/csv-desk">Buy CSV Desk for $9</a>
+          <a class="button secondary" href="https://github.com/joysky77/csv-cleanup-services">See the public demo</a>
+        </div>
+        <p class="note">PayPal checkout is available through itch.io. No subscription or account is needed to run the tool.</p>
+      </div>
+      <img class="shot" src="https://raw.githubusercontent.com/joysky77/csv-cleanup-services/main/assets/CSV-Desk-v1.0.0-preview.png" alt="CSV Desk showing a cleaned CSV preview and change summary">
+    </section>
+
+    <section class="grid" aria-label="Key features">
+      <article class="card"><h2>Local by design</h2><p>No upload, analytics, network calls, or runtime AI. The supplied HTML runs directly in your browser.</p></article>
+      <article class="card"><h2>Conservative cleanup</h2><p>Trim surrounding whitespace, remove exact duplicate rows, and optionally make formula-like cells inert.</p></article>
+      <article class="card"><h2>Reviewable output</h2><p>Preview the first 20 rows and export a JSON report with changed record and column positions.</p></article>
+    </section>
+
+    <section class="limits">
+      <div>
+        <h2>Included</h2>
+        <ul>
+          <li>Standalone CSV Desk HTML tool</li>
+          <li>Synthetic example and usage guide</li>
+          <li>Personal and commercial internal-use license</li>
+          <li>UTF-8 and GB18030 input; UTF-8 BOM output</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Clear limits</h2>
+        <p>Comma-delimited CSV only, up to 5 MB, 10,000 data records, and 100 columns. CSV Desk does not convert XLSX files, infer business rules, or include custom cleanup services.</p>
+        <p>Code and documentation were AI-generated and browser-tested. No independent human review is claimed.</p>
+      </div>
+    </section>
+
+    <footer>CSV Desk 1.0.0 · Sold and delivered through itch.io · Platform refund rules and mandatory consumer rights apply.</footer>
+  </main>
+</body>
+</html>
