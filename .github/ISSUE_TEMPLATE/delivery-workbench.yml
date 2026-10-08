@@ -1,0 +1,47 @@
+name: Delivery Workbench purchase inquiry
+description: Check compatibility and request the USD 19 Delivery Workbench 0.4.1 package
+title: "[Delivery Workbench] Purchase inquiry"
+labels:
+  - product-question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Delivery Workbench 0.4.1 is a USD 19 local planning tool for documented structured JSON briefs. Read the [product page](https://joysky77.github.io/csv-cleanup-services/delivery-workbench.html) before submitting.
+
+        Do not include private project files, credentials, payment details, customer data, or employer-confidential information. This public issue confirms fit only; payment is requested after scope is agreed.
+  - type: input
+    id: environment
+    attributes:
+      label: Operating system and Python version
+      placeholder: Windows 11, Python 3.13
+    validations:
+      required: true
+  - type: dropdown
+    id: intended_use
+    attributes:
+      label: Intended use
+      options:
+        - Evaluate the synthetic example
+        - Import my own structured JSON brief
+        - Review dependencies and blockers
+        - Export JSON or Markdown
+        - License or purchase question
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Compatibility or purchase question
+      description: Describe the expected workflow using fictional names only. Do not attach project files.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have not included private data, credentials, payment details, or confidential files.
+          required: true
+        - label: I understand this inquiry is not an order and payment will be requested only after compatibility and scope are confirmed.
+          required: true
