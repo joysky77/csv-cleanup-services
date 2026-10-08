@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Delivery Workbench 0.4.1 turns a structured software-project brief into a local source-linked delivery graph. Python source, one-time $19.">
+  <title>Delivery Workbench 0.4.1 — Local project delivery graph</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/delivery-workbench.html">
+  <meta property="og:title" content="Delivery Workbench 0.4.1 — Local project delivery graph">
+  <meta property="og:description" content="Inspect dependencies, edit work units, find planning blockers, and export JSON or Markdown on your own computer.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/joysky77/csv-cleanup-services/main/delivery-workbench-v0.4.1-preview.png">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/delivery-workbench.html">
+  <meta property="og:type" content="product">
+  <meta property="product:price:amount" content="19.00">
+  <meta property="product:price:currency" content="USD">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Delivery Workbench",
+        "softwareVersion": "0.4.1",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, macOS, or Linux with Python 3.10+ and a modern browser",
+        "description": "Local workbench for turning a structured software-project brief into a source-linked delivery graph.",
+        "url": "https://joysky77.github.io/csv-cleanup-services/delivery-workbench.html",
+        "image": "https://raw.githubusercontent.com/joysky77/csv-cleanup-services/main/delivery-workbench-v0.4.1-preview.png",
+        "featureList": "Structured brief import, dependency graph, blocker review, editable work units, JSON export, Markdown export, local operation",
+        "offers": {
+          "@type": "Offer",
+          "price": "19.00",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://github.com/joysky77/csv-cleanup-services/issues/new?template=delivery-workbench.yml"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {"@type": "Question", "name": "Does Delivery Workbench need a paid AI account?", "acceptedAnswer": {"@type": "Answer", "text": "No. Version 0.4.1 runs locally with Python 3.10 or newer and a modern browser. Its recommendations are rule-based and require review."}},
+          {"@type": "Question", "name": "Can it understand any document automatically?", "acceptedAnswer": {"@type": "Answer", "text": "No. It imports the documented structured JSON format. Custom conversion from arbitrary documents is not included."}},
+          {"@type": "Question", "name": "How is the download delivered?", "acceptedAnswer": {"@type": "Answer", "text": "Compatibility and scope are confirmed first. Payment instructions are then provided, and the versioned ZIP is delivered after actual payment is verified."}}
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root { color-scheme:light; --ink:#152024; --muted:#5c6669; --paper:#f1f4f2; --card:#fff; --accent:#2c604d; --line:#d3dcda; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+    main { width:min(1060px,calc(100% - 32px)); margin:auto; }
+    nav { padding-top:28px; } nav a { color:var(--accent); text-decoration:none; font-weight:700; }
+    .hero { display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; padding:48px 0; }
+    .eyebrow { color:var(--accent); font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:.78rem; }
+    h1 { font-size:clamp(2.4rem,6vw,4.7rem); line-height:1; letter-spacing:-.05em; margin:.4rem 0 1rem; }
+    h2 { line-height:1.2; }
+    .lead { color:var(--muted); font-size:1.17rem; }
+    .shot { width:100%; border:1px solid var(--line); border-radius:14px; box-shadow:0 18px 48px #17352c20; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; margin:24px 0 10px; }
+    .button { display:inline-block; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:750; }
+    .primary { color:white; background:var(--accent); }
+    .secondary { color:var(--ink); background:var(--card); border:1px solid var(--line); }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:18px 0 52px; }
+    .card,details { background:var(--card); border:1px solid var(--line); border-radius:11px; padding:20px; }
+    .card h2 { font-size:1.05rem; margin:0 0 7px; }
+    .card p,.muted,details p { color:var(--muted); }
+    .scope { border-top:1px solid var(--line); padding:34px 0 52px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+    .faq { border-top:1px solid var(--line); padding:34px 0 60px; }
+    details { margin:10px 0; padding:14px 18px; } summary { cursor:pointer; font-weight:750; } details p { margin:.6rem 0 0; }
+    footer { border-top:1px solid var(--line); padding:22px 0 36px; color:var(--muted); font-size:.88rem; }
+    @media(max-width:760px){.hero,.scope{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.hero{padding-top:34px}}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="./">← JoySky Tools</a></nav>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Delivery Workbench 0.4.1 · one-time $19</div>
+        <h1>Turn a project brief into a delivery graph.</h1>
+        <p class="lead">Import a documented structured brief, inspect dependencies and planning blockers, edit work units, then export JSON or Markdown. It runs on your own computer.</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/joysky77/csv-cleanup-services/issues/new?template=delivery-workbench.yml">Request purchase</a>
+          <a class="button secondary" href="https://github.com/joysky77/csv-cleanup-services#delivery-workbench--19-download">Review the public specification</a>
+        </div>
+        <p class="muted">Compatibility and scope are confirmed before payment. Do not send confidential project files in a public issue.</p>
+      </div>
+      <img class="shot" src="https://raw.githubusercontent.com/joysky77/csv-cleanup-services/main/delivery-workbench-v0.4.1-preview.png" alt="Delivery Workbench showing a synthetic project graph with work units and dependencies">
+    </section>
+
+    <section class="grid" aria-label="Key features">
+      <article class="card"><h2>Source-linked planning</h2><p>Keep each work unit tied to the source identifiers supplied in the structured brief.</p></article>
+      <article class="card"><h2>Dependencies and blockers</h2><p>Inspect a graph, dependency ordering, and rule-based planning warnings before export.</p></article>
+      <article class="card"><h2>Local and portable</h2><p>Python source, synthetic example, local browser interface, and JSON or Markdown export are included.</p></article>
+    </section>
+
+    <section class="scope">
+      <div>
+        <h2>Included</h2>
+        <ul>
+          <li>Versioned 0.4.1 ZIP and Python source</li>
+          <li>Synthetic example and setup guide</li>
+          <li>Internal commercial-use rights</li>
+          <li>One setup troubleshooting exchange within seven days</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Requirements and limits</h2>
+        <p>Requires Python 3.10+ and a modern browser. Arbitrary-document conversion, consulting, hosting, custom development, staffing decisions, and future upgrades are not included. Rule-based recommendations require review.</p>
+        <p>Code and documentation were AI-assisted and browser-tested. No independent human technical review is claimed.</p>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions before ordering</h2>
+      <details><summary>Does it require a paid AI account?</summary><p>No. Version 0.4.1 runs locally. It does not call a paid model or cloud service.</p></details>
+      <details><summary>Can it understand any document automatically?</summary><p>No. It imports the documented structured JSON format. Custom document conversion is outside the $19 package.</p></details>
+      <details><summary>How is payment and delivery handled?</summary><p>First submit a purchase inquiry with your operating system. After compatibility and scope are confirmed, payment instructions are provided. The ZIP is delivered only after actual payment is verified.</p></details>
+    </section>
+
+    <footer>Delivery Workbench 0.4.1 · USD 19 · No subscription · Independent local planning tool</footer>
+  </main>
+</body>
+</html>
