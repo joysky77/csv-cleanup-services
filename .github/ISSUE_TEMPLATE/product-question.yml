@@ -1,0 +1,44 @@
+name: CSV Desk product question
+description: Ask a public pre-purchase compatibility question about CSV Desk 1.0.0
+title: "[CSV Desk] "
+labels:
+  - product-question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        CSV Desk is a $9 offline browser tool sold through itch.io. Before posting, review the [product page](https://joysky77.github.io/csv-cleanup-services/) and [live sample](https://joysky77.github.io/csv-cleanup-services/demo.html).
+
+        Do not upload private data, credentials, payment details, or customer files. Use fictional examples only.
+  - type: dropdown
+    id: question_type
+    attributes:
+      label: Question type
+      options:
+        - File compatibility
+        - Cleanup behavior
+        - Output and change report
+        - License or internal business use
+        - Purchase or download problem
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system and browser version, if relevant.
+      placeholder: Windows 11, Microsoft Edge 141
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Describe the expected behavior using fictional column names and values.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I have not included private files, credentials, payment details, or personal data.
+          required: true
