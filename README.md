@@ -113,3 +113,7 @@ Download is delivered after payment verification. This is an independent local p
 
 ![Synthetic example in the local workbench](delivery-workbench-v0.4.1-preview.png)
 
+## License
+
+Source code and documentation committed to this repository are available under the [MIT License](LICENSE). Separately delivered paid-product archives can include their own license terms; those archives are not part of this repository.
+
