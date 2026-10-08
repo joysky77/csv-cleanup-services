@@ -20,6 +20,8 @@ Need to count repeated records first? [Download the fixed version 1.0.0 HTML fil
 
 Need to review formula-like cells before opening a CSV in a spreadsheet? [Download the fixed version 1.1.0 HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/formula-risk-checker-v1.1.0/CSV-Formula-Risk-Checker-v1.1.0.html) or [run the free local formula-risk checker](https://joysky77.github.io/csv-cleanup-services/csv-formula-risk-checker.html). It reports conservative locations and previews without uploading, executing formulas or changing the source file.
 
+Read the source-linked [CSV formula injection prevention guide](https://joysky77.github.io/csv-cleanup-services/prevent-csv-formula-injection.html) or its [中文说明](https://joysky77.github.io/csv-cleanup-services/csv-formula-injection-prevention-zh.html) for a practical review checklist, mitigation limits and links to OWASP and MITRE CWE-1236.
+
 ## Fixed USD 12 formula-safety service
 
 Need a repaired copy rather than a report? The [CSV Formula Safety Fix](https://joysky77.github.io/csv-cleanup-services/csv-formula-safety-service.html) is a fixed USD 12 service for one comma-delimited CSV up to 5 MB, 10,000 data records and 100 columns. It supports UTF-8 and GB18030 input and delivers a separate UTF-8 BOM CSV plus a JSON audit report. The source is never overwritten.
