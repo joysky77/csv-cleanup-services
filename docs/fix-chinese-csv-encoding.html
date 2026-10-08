@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A safe workflow for fixing Chinese CSV mojibake, choosing UTF-8 or GB18030, preserving leading-zero IDs, and producing an Excel-friendly UTF-8 BOM file.">
+  <title>Fix Chinese CSV encoding: UTF-8, GB18030, and Excel mojibake</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html">
+  <meta property="og:title" content="Fix Chinese CSV encoding without damaging the data">
+  <meta property="og:description" content="Identify UTF-8 or GB18030 correctly, preserve identifiers, and export an Excel-friendly UTF-8 BOM CSV.">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "headline": "Fix Chinese CSV encoding: UTF-8, GB18030, and Excel mojibake",
+        "description": "A conservative workflow for identifying a Chinese CSV encoding, preventing mojibake, preserving text identifiers, and exporting an Excel-friendly UTF-8 BOM file.",
+        "datePublished": "2026-10-09",
+        "dateModified": "2026-10-09",
+        "mainEntityOfPage": "https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html",
+        "author": {"@type": "Organization", "name": "JoySky Tools"}
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {"@type":"Question","name":"Why does Chinese text become garbled in a CSV?","acceptedAnswer":{"@type":"Answer","text":"The program opening the file may be decoding its bytes with a different character encoding from the one used to create it. UTF-8 bytes interpreted as a legacy Windows encoding, or GB18030 bytes interpreted as UTF-8, can produce unreadable text."}},
+          {"@type":"Question","name":"Should I rename the file or change its extension?","acceptedAnswer":{"@type":"Answer","text":"No. Renaming a file does not convert its bytes. Decode the original with the correct source encoding and write a new output in the chosen destination encoding."}},
+          {"@type":"Question","name":"Why use UTF-8 with a BOM for Excel on Windows?","acceptedAnswer":{"@type":"Answer","text":"The BOM gives many Windows spreadsheet workflows an explicit UTF-8 signal. Keep the original file and test the exported copy in the exact application that will consume it."}}
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root { color-scheme:light; --ink:#10251f; --muted:#52635e; --paper:#f6f3eb; --card:#fffdf7; --accent:#146b52; --line:#d8ded8; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:17px/1.72 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+    main { width:min(840px,calc(100% - 32px)); margin:auto; padding:56px 0 72px; }
+    nav a, footer a { color:var(--accent); font-weight:700; text-decoration:none; }
+    h1 { font-size:clamp(2.3rem,7vw,4.15rem); line-height:1.03; letter-spacing:-.045em; margin:1.4rem 0; }
+    h2 { margin-top:2.4rem; line-height:1.2; }
+    .lead { color:var(--muted); font-size:1.2rem; }
+    .callout,.cta,.faq details { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 24px; margin:24px 0; }
+    .cta { border-color:#9fc3b7; }
+    .button { display:inline-block; color:white; background:var(--accent); padding:11px 18px; border-radius:8px; text-decoration:none; font-weight:750; margin:.4rem .5rem .2rem 0; }
+    .secondary { color:var(--ink); background:transparent; border:1px solid var(--line); }
+    code { background:#e9ede8; border-radius:4px; padding:.1em .3em; }
+    pre { overflow:auto; background:#e9ede8; border-radius:8px; padding:16px; font-size:.9rem; }
+    li { margin:.45rem 0; }
+    summary { cursor:pointer; font-weight:750; }
+    .faq details p { margin:.7rem 0 0; color:var(--muted); }
+    footer { border-top:1px solid var(--line); margin-top:50px; padding-top:22px; color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="./">← CSV Desk</a></nav>
+    <article>
+      <h1>Fix Chinese CSV encoding without damaging the data</h1>
+      <p class="lead">When Chinese names turn into symbols or strings such as <code>ä¸­æ–‡</code>, the text usually has not “changed language.” The bytes were decoded with the wrong character encoding. The safe fix is to identify the source encoding, decode once, and write a separate verified output.</p>
+
+      <div class="callout"><strong>Do not overwrite the original.</strong> A failed encoding conversion can replace undecodable characters permanently. Preserve the source, work on a copy, and compare representative records after conversion.</div>
+
+      <h2>What mojibake actually means</h2>
+      <p>A CSV file is a sequence of bytes. An encoding tells software how those bytes map to characters. UTF-8 represents Unicode text with a variable number of bytes. GB18030 is a Chinese national character encoding widely encountered in exports from Windows and older business systems. Both can represent Chinese text, but their byte sequences are interpreted differently.</p>
+      <p>Mojibake appears when the reader guesses a different encoding from the writer. Renaming the file, changing <code>.csv</code> to <code>.txt</code>, or choosing another font does not convert the bytes. Repeatedly opening and saving the damaged display can make recovery harder because the wrong characters may be written back as new data.</p>
+
+      <h2>Start with evidence, not trial-and-error saving</h2>
+      <p>Keep an untouched copy and inspect the first few kilobytes in a capable text editor. If the file begins with the UTF-8 byte-order mark, that is a useful signal. A file without a mark may still be UTF-8. If strict UTF-8 decoding fails and the file came from a mainland Chinese Windows application, GB18030 is a reasonable candidate to test.</p>
+      <p>An encoding detector can suggest candidates, but it cannot understand whether a decoded customer name is correct. Validate with known Chinese phrases, uncommon characters, punctuation, and a few records whose expected values are available. A successful decode with no software error is necessary, but readable and semantically correct samples are stronger evidence.</p>
+
+      <h2>Convert by decoding once and encoding once</h2>
+      <p>The conversion has two explicit steps: read bytes using the confirmed source encoding, then write text using the chosen destination encoding. For a Python workflow, strict error handling prevents silent substitution:</p>
+      <pre><code>from pathlib import Path
+
+source = Path("export-original.csv")
+target = Path("export-utf8-bom.csv")
+
+text = source.read_text(encoding="gb18030", errors="strict")
+target.write_text(text, encoding="utf-8-sig", errors="strict")</code></pre>
+      <p>Use <code>utf-8</code> instead of <code>gb18030</code> when that is the verified source. The destination <code>utf-8-sig</code> writes UTF-8 with a BOM, which is often more reliably recognized by Microsoft Excel on Windows. This example converts text only; it does not validate CSV columns, quoted line breaks, duplicates, or spreadsheet formula risks.</p>
+
+      <h2>Preserve identifiers as text</h2>
+      <p>Encoding repair and data-type conversion are separate operations. A spreadsheet may display a correctly decoded value while still changing <code>001234</code> into <code>1234</code>, converting a long identifier to scientific notation, or guessing a date. Customer IDs, postal codes, telephone numbers, invoice references, and product codes should remain text unless a documented rule says otherwise.</p>
+      <p>Opening the CSV through an import dialog can let you select UTF-8 and mark identifier columns as text. If another system consumes the file, test the new CSV in that exact importer. A file that looks correct in a text editor can still be interpreted differently by a spreadsheet or database tool.</p>
+
+      <h2>Validate CSV structure after conversion</h2>
+      <p>Character conversion should not change the logical table, but validation still matters. Use a real CSV parser rather than splitting lines at commas. Quoted fields may contain commas, quotation marks, or line breaks. Check that:</p>
+      <ul>
+        <li>the header and expected column count remain unchanged;</li>
+        <li>the record count matches the source;</li>
+        <li>Chinese names and addresses are readable;</li>
+        <li>quoted commas stay inside their original fields;</li>
+        <li>leading-zero identifiers remain intact;</li>
+        <li>no replacement character such as <code>�</code> appears unexpectedly;</li>
+        <li>the original file hash and modification time remain untouched.</li>
+      </ul>
+      <p>Sample both common and unusual records. Include the first and last rows, a record with uncommon Chinese characters, a quoted address, and an identifier with leading zeros. Keep a small report recording the detected source encoding, chosen destination encoding, input and output counts, and any additional cleanup rule.</p>
+
+      <h2>When UTF-8 BOM is useful</h2>
+      <p>A BOM is not required for valid UTF-8, and many programming tools work without it. In Windows spreadsheet workflows it can act as an explicit hint and reduce incorrect legacy-encoding guesses. The correct choice depends on the receiving application. If a downstream system forbids a BOM, export plain UTF-8 and document that requirement instead.</p>
+      <p>Do not treat a BOM as proof that every row is valid. It identifies the intended Unicode encoding, but it says nothing about delimiters, quoting, record counts, or business rules. Reopen the exported file with a strict CSV parser and the target spreadsheet application before replacing any operational import.</p>
+
+      <h2>Use a local tool when the file is private</h2>
+      <p>Customer exports may contain personal or commercial information. Uploading them to an unknown converter creates another copy and another party handling the data. CSV Desk runs locally in Microsoft Edge, supports UTF-8 and GB18030 input, writes a separate UTF-8 BOM CSV, preserves text identifiers, and produces a JSON change report. For files requiring a custom duplicate rule or a reviewed service workflow, the fixed-scope CSV cleanup service starts with a public inquiry containing only fictional examples.</p>
+
+      <div class="cta">
+        <strong>Choose the path that matches the file.</strong>
+        <p>Use CSV Desk for repeatable local cleanup of small files. Use the service inquiry when the source encoding, duplicate definition, or acceptance checks need to be agreed first.</p>
+        <a class="button" href="https://joysky7777.itch.io/csv-desk/purchase">Buy CSV Desk for $9</a>
+        <a class="button secondary service-cta" href="csv-cleanup-service.html">Review the $25 service</a>
+      </div>
+
+      <section class="faq" aria-labelledby="faq-title">
+        <h2 id="faq-title">Encoding questions</h2>
+        <details><summary>Why does Chinese text become garbled in a CSV?</summary><p>The opening program may be using a different encoding from the program that created the file. Decode the original bytes with the confirmed source encoding before writing a new copy.</p></details>
+        <details><summary>Can I fix it by renaming the file?</summary><p>No. A filename or extension does not change the byte encoding. Conversion requires a correct decode followed by an intentional encode.</p></details>
+        <details><summary>Should every UTF-8 CSV have a BOM?</summary><p>No. It is optional. It is often useful for Excel on Windows, while some importers require plain UTF-8. Test the actual receiving application.</p></details>
+      </section>
+
+      <p><small>Disclosure: this guide and the linked software were produced with AI assistance and browser-tested. Encoding selection still requires verification against the source system and representative records.</small></p>
+    </article>
+    <footer>CSV Desk 1.0.0 · Also read <a href="how-to-clean-csv-offline.html">the offline CSV cleanup checklist</a> · <a href="./">Product page</a></footer>
+  </main>
+</body>
+</html>
