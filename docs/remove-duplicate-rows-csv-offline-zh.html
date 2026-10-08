@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="说明如何在本地查找并删除CSV精确重复行，同时保留原文件、前导零、带引号字段和跨行记录。">
+  <title>CSV重复行怎么删除：不上传文件的本地方法</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline-zh.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline-zh.html">
+  <link rel="alternate" hreflang="en" href="https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline.html">
+  <meta property="og:title" content="CSV重复行怎么删除：不上传文件的本地方法">
+  <meta property="og:description" content="区分精确重复和业务重复，先检查、再另存，并用变更记录核对删除结果。">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline-zh.html">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[{"@type":"TechArticle","inLanguage":"zh-CN","headline":"CSV重复行怎么删除：不上传文件的本地方法","description":"在本地查找并删除CSV精确重复行，同时保留原文件、字段结构和变更记录。","datePublished":"2026-10-09","dateModified":"2026-10-09","mainEntityOfPage":"https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline-zh.html","author":{"@type":"Organization","name":"JoySky Tools"}},{"@type":"FAQPage","inLanguage":"zh-CN","mainEntity":[{"@type":"Question","name":"怎样才算CSV精确重复行？","acceptedAnswer":{"@type":"Answer","text":"两条记录列数相同，而且每一列的值都一致，才算精确重复。除非事先约定规则，否则大小写、空格、前导零和数字格式都有区别。"}},{"@type":"Question","name":"可以不上传CSV就检查重复行吗？","acceptedAnswer":{"@type":"Answer","text":"可以。本地浏览器工具可以在设备内存中解析和比较文件，不把内容上传到服务器。"}},{"@type":"Question","name":"可以只按邮箱或客户编号删除重复记录吗？","acceptedAnswer":{"@type":"Answer","text":"只有明确去重键和保留规则时才可以。单个字段相同不代表整条业务记录可以删除。"}}]}]}
+  </script>
+  <style>
+    :root{color-scheme:light;--ink:#172033;--muted:#586174;--paper:#f4f7fb;--card:#fff;--blue:#1d4ed8;--line:#d8e0eb;--soft:#eaf0ff}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.82 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}main{width:min(900px,calc(100% - 32px));margin:auto;padding:36px 0 64px}nav a,footer a{color:var(--blue);font-weight:700;text-decoration:none}h1{font-size:clamp(2.45rem,7vw,4.6rem);line-height:1.1;letter-spacing:-.045em;margin:1.4rem 0}h2{margin-top:2.5rem;line-height:1.3}.lead{color:var(--muted);font-size:1.2rem}.callout,.cta{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:28px 0}.callout{border-left:5px solid var(--blue)}.example{background:var(--soft);border-radius:10px;padding:16px 18px;overflow:auto}.button{display:inline-block;color:#fff;background:var(--blue);padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:750;margin:.4rem .5rem .2rem 0}.secondary{color:var(--ink);background:transparent;border:1px solid var(--line)}code{background:#e9edf5;border-radius:4px;padding:.1em .3em}li{margin:.5rem 0}details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}summary{cursor:pointer;font-weight:750}footer{border-top:1px solid var(--line);margin-top:48px;padding-top:22px;color:var(--muted);font-size:.9rem}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="csv-desk-zh.html">← CSV Desk中文页</a> · <a href="remove-duplicate-rows-csv-offline.html" lang="en">English</a></nav>
+    <article>
+      <h1>CSV重复行怎么删除？先分清“重复”的含义</h1>
+      <p class="lead">稳妥的做法不是看到相同字段就直接删行，而是先约定判定规则，正确解析CSV，保留原文件，再核对实际删除的记录。小型文件可以全程在本地处理。</p>
+      <div class="callout"><strong>自动处理时先采用最窄的规则：</strong>只有各列内容完全一致的记录，才按精确重复处理。姓名、邮箱或客户编号相同，并不能证明整条记录可以删除。</div>
+
+      <h2>精确重复和业务重复不是一回事</h2>
+      <p>精确重复是整行内容完全相同。业务重复则需要判断：两行虽然不完全一致，但可能指向同一客户、商品、发票或事件。</p>
+      <div class="example"><code>001,"陈梅",mei@example.com,2026-10-01</code><br><code>001,"陈梅",mei@example.com,2026-10-01</code><br><br>第二行是精确重复。<br><br><code>001,"陈梅",mei@example.com,2026-10-02</code><br>日期不同，可能代表另一次业务事件，不能直接删除。</div>
+      <p>按关键字段去重也要有明确规则，例如“订单编号相同，保留时间最新的一条”。只写“删除重复客户”，既没有说明比较哪些列，也没有说明冲突时保留哪条。</p>
+
+      <h2>一、保留原文件，另存清理结果</h2>
+      <p>不要覆盖源文件。规则理解有误、编码读取错误或后续导入失败时，原文件是核对和回退的依据。建议记录输入文件名、读取编码、数据行数、唯一行数和删除的记录号。</p>
+
+      <h2>二、按CSV结构解析</h2>
+      <p>CSV字段可以包含逗号、双引号和换行。例如 <code>17,"Chen, Mei","第一行&#10;第二行"</code> 仍是一条三列记录。直接按逗号或换行切分会破坏字段结构，重复判断也会失真。</p>
+      <p>应使用能识别带引号字段和转义双引号的解析器。遇到格式错误时明确报告，不要猜测字段应移动到哪一列。解析后还要确认每条记录的列数与表头一致。</p>
+
+      <h2>三、比较前是否整理空格，要提前约定</h2>
+      <p>严格比较时，<code>001</code> 与 <code>1</code>、<code>Ada</code> 与 <code>ada</code>、<code>销售部</code> 与末尾多一个空格的 <code>销售部 </code> 都不相同。</p>
+      <p>如果确实要忽略首尾空格，应把清理空格列为独立步骤，并记录改变的位置。不要把客户编号、邮政编码或商品编码自动转成数值，否则前导零可能丢失。</p>
+
+      <h2>四、先检查，再决定是否删除</h2>
+      <p>先运行只检查、不修改的步骤，查看重复数量和记录号。数量异常时，应重新检查分隔符、表头、编码和去重规则。</p>
+      <div class="cta"><strong>可以先用免费工具在本地检查。</strong><p>免费检查器只报告精确重复行，不修改或上传文件。限制为5 MB、1万条数据记录、100列，仅支持逗号分隔CSV。</p><a class="button" href="csv-duplicate-checker.html">打开免费重复行检查器</a></div>
+
+      <h2>五、删除后留下变更记录</h2>
+      <p>处理精确重复时，可以保留第一次出现的记录，省略后续完全相同的行。报告至少写明输入行数、输出行数、删除数量、删除记录号及其首次匹配位置。</p>
+
+      <h2>六、重新解析并验证输出</h2>
+      <ul>
+        <li>表头和列数没有变化；</li>
+        <li>输出行数等于输入行数减去报告中的重复数；</li>
+        <li>结果中不再存在精确重复行；</li>
+        <li>带逗号、双引号或换行的字段仍能正确解析；</li>
+        <li>前导零和文本编号没有改变；</li>
+        <li>中文和其他非ASCII字符显示正常；</li>
+        <li>源文件没有被修改。</li>
+      </ul>
+      <p>还应抽查第一条、最后一条、含中文的记录、跨行字段和带前导零的编号。重新解析只能证明结构有效，抽查可以发现结构合法但业务含义已经改变的问题。</p>
+
+      <h2>什么时候不能自动删除</h2>
+      <p><code>某某有限公司</code> 与 <code>某某公司</code>，或者邮箱相同但订单历史不同的两条记录，都不属于精确重复。遇到近似匹配，应先确定去重键、格式统一规则和保留策略。有些情况更适合生成待人工复核清单。</p>
+
+      <div class="cta"><strong>需要直接生成清理后的文件？</strong><p>CSV Desk可以在本地删除精确重复行，另存UTF-8 BOM CSV并导出JSON变更报告。规则需要先确认时，可查看固定范围的单文件整理服务。</p><a class="button" href="https://joysky7777.itch.io/csv-desk/purchase">9美元购买CSV Desk</a><a class="button secondary" href="csv-cleanup-service-zh.html">查看25美元整理服务</a></div>
+
+      <h2>常见问题</h2>
+      <details><summary>怎样才算CSV精确重复行？</summary><p>两条记录列数相同，而且每一列的值都一致，才算精确重复。除非事先约定规则，否则大小写、空格、前导零和数字格式都有区别。</p></details>
+      <details><summary>可以不上传CSV就检查重复行吗？</summary><p>可以。本地浏览器工具可以在设备内存中读取和比较文件。上面的免费检查器不包含上传或运行时网络代码。</p></details>
+      <details><summary>可以只按邮箱或客户编号删除吗？</summary><p>只有明确去重键和保留规则时才可以。单个字段相同不代表整条业务记录可以删除。</p></details>
+      <p><small>说明：本页、相关软件代码和文档由AI辅助生成，并通过浏览器自动测试。这里采用保守、可核对的处理方法，不承诺自动识别所有现实业务中的重复记录。</small></p>
+    </article>
+    <footer>JoySky Tools · <a href="csv-duplicate-checker.html">免费重复行检查器</a> · <a href="csv-desk-zh.html">CSV Desk中文页</a></footer>
+  </main>
+</body>
+</html>
