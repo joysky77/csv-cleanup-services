@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical checklist for cleaning CSV files offline without damaging IDs, quoted commas, formulas, encodings, or the source file.">
+  <title>How to clean a CSV offline without damaging the data</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/how-to-clean-csv-offline.html">
+  <meta property="og:title" content="How to clean a CSV offline without damaging the data">
+  <meta property="og:description" content="A conservative workflow for whitespace, duplicates, encodings, spreadsheet formulas, and audit reports.">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/how-to-clean-csv-offline.html">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "How to clean a CSV offline without damaging the data",
+    "description": "A conservative checklist for cleaning CSV files locally while preserving identifiers, quoted fields, encodings, and the original source.",
+    "datePublished": "2026-10-09",
+    "dateModified": "2026-10-09",
+    "mainEntityOfPage": "https://joysky77.github.io/csv-cleanup-services/how-to-clean-csv-offline.html",
+    "author": {"@type": "Organization", "name": "JoySky Tools"}
+  }
+  </script>
+  <style>
+    :root { color-scheme:light; --ink:#10251f; --muted:#52635e; --paper:#f6f3eb; --card:#fffdf7; --accent:#146b52; --line:#d8ded8; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:17px/1.72 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+    main { width:min(820px,calc(100% - 32px)); margin:auto; padding:56px 0 72px; }
+    nav a { color:var(--accent); font-weight:700; text-decoration:none; }
+    h1 { font-size:clamp(2.3rem,7vw,4.2rem); line-height:1.03; letter-spacing:-.045em; margin:1.4rem 0; }
+    h2 { margin-top:2.4rem; line-height:1.2; }
+    .lead { color:var(--muted); font-size:1.2rem; }
+    .callout,.cta { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 24px; margin:28px 0; }
+    .cta { border-color:#9fc3b7; }
+    .button { display:inline-block; color:white; background:var(--accent); padding:11px 18px; border-radius:8px; text-decoration:none; font-weight:750; margin:.4rem .5rem .2rem 0; }
+    .secondary { color:var(--ink); background:transparent; border:1px solid var(--line); }
+    code { background:#e9ede8; border-radius:4px; padding:.1em .3em; }
+    li { margin:.45rem 0; }
+    footer { border-top:1px solid var(--line); margin-top:50px; padding-top:22px; color:var(--muted); font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="./">← CSV Desk</a></nav>
+    <article>
+      <h1>How to clean a CSV offline without damaging the data</h1>
+      <p class="lead">CSV cleanup looks simple until an identifier loses its leading zero, a quoted comma becomes a new column, or a spreadsheet executes text as a formula. A safe workflow makes small, explicit changes and keeps evidence of each one.</p>
+
+      <div class="callout"><strong>The central rule:</strong> never overwrite the source file. Read the original, write a new output, and keep a report that explains what changed.</div>
+
+      <h2>1. Identify the file before changing it</h2>
+      <p>Confirm that the file is really comma-delimited CSV. A filename ending in <code>.csv</code> can still contain semicolons, tabs, or an encoding other than UTF-8. Open a copy in a plain-text editor first. Check whether quoted fields contain commas, whether the first row is a header, and whether every record has the same number of columns.</p>
+      <p>Do not convert values to numbers just because they contain digits. Customer IDs, postal codes, telephone numbers, invoice references, and product codes often need their original text form. The value <code>00017</code> is not interchangeable with <code>17</code>.</p>
+
+      <h2>2. Decode text deliberately</h2>
+      <p>UTF-8 is common, but exports from Chinese Windows applications may use GB18030. Guessing the wrong encoding can replace names and addresses with unreadable characters. Record the chosen input encoding and write the cleaned output in a documented encoding. UTF-8 with a byte-order mark is a practical choice when the output will be opened in Microsoft Excel on Windows.</p>
+
+      <h2>3. Parse CSV syntax instead of splitting lines</h2>
+      <p>A CSV field may contain commas, quotes, and line breaks. Splitting each line on commas breaks valid data such as <code>"Chen, Mei"</code>. Use a CSV parser that understands quoted fields and escaped quotation marks. Reject malformed rows or report them clearly instead of silently shifting cells into the wrong columns.</p>
+
+      <h2>4. Trim only surrounding whitespace</h2>
+      <p>Removing spaces at the beginning and end of a field is usually conservative. Removing every space is not: <code>New York</code> must not become <code>NewYork</code>. Apply the same rule to every cell, record the row and column positions that changed, and leave internal spacing alone unless a separate business rule explicitly says otherwise.</p>
+
+      <h2>5. Define exactly what “duplicate” means</h2>
+      <p>The safest automatic rule is to remove only rows that are identical across every column after the agreed normalization. Deleting rows merely because two records share a name, email address, or customer ID can destroy legitimate orders and historical events.</p>
+      <p>If the business wants key-based deduplication, agree on the key and the survivor rule first. For example: “For the same order ID, keep the newest timestamp” is testable. “Remove duplicates” is not.</p>
+
+      <h2>6. Treat spreadsheet formulas as a separate risk</h2>
+      <p>When CSV files are opened in spreadsheet software, cells beginning with <code>=</code>, <code>+</code>, <code>-</code>, or <code>@</code> may be interpreted as formulas. If those values came from an untrusted form or export, they can become a spreadsheet formula-injection risk. A cleanup tool can optionally make such cells inert, but it should report every affected position because a legitimate formula may need different handling.</p>
+
+      <h2>7. Validate the output</h2>
+      <p>Before delivery or import, check these invariants:</p>
+      <ul>
+        <li>The source file is unchanged.</li>
+        <li>The output has the expected header and column count.</li>
+        <li>Quoted commas and quotation marks still parse correctly.</li>
+        <li>Text identifiers retain leading zeros.</li>
+        <li>Chinese and other non-ASCII text is readable.</li>
+        <li>The number of removed rows equals the duplicate report.</li>
+        <li>Every modified cell appears in the change report.</li>
+      </ul>
+      <p>Also compare a few records against the source by hand. Sample the first and last records, a row containing non-ASCII text, a quoted field, and a value with leading zeros. Automated counts catch broad failures; a small targeted review catches changes that remain syntactically valid but violate the file's meaning.</p>
+
+      <h2>8. Keep cleanup local when the data is sensitive</h2>
+      <p>Uploading a customer export to an unfamiliar web service creates another copy and another data-handling relationship. For small files, a local browser tool can provide a simpler boundary: the file stays on the computer, processing happens in memory, and the operator downloads the result directly.</p>
+
+      <div class="cta">
+        <strong>Try the workflow with synthetic data.</strong>
+        <p>The public CSV Desk demo shows whitespace trimming, exact-row deduplication, identifier preservation, and a change summary. CSV Desk 1.0.0 packages the same conservative workflow as a standalone offline HTML tool.</p>
+        <a class="button" href="demo.html">Try the sample</a>
+        <a class="button secondary" href="https://joysky7777.itch.io/csv-desk/purchase">Buy CSV Desk for $9</a>
+      </div>
+
+      <p><small>Disclosure: this guide, the software code, and its documentation were produced with AI assistance and browser-tested. The guide describes a conservative technical workflow; it is not a claim that every business dataset can be cleaned automatically.</small></p>
+    </article>
+    <footer>CSV Desk 1.0.0 · Private offline CSV cleanup · <a href="./">Product page</a></footer>
+  </main>
+</body>
+</html>
