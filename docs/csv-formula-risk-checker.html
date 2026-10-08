@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Find formula-like cells in a small CSV locally before opening it in a spreadsheet. No upload, account or installation.">
+  <meta name="description" content="Find common ASCII, full-width and control-character formula markers in a small CSV locally before opening it in a spreadsheet. No upload.">
   <title>Free local CSV formula risk checker — no upload</title>
   <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/csv-formula-risk-checker.html">
   <meta property="og:title" content="Free local CSV formula risk checker">
@@ -21,7 +21,7 @@
   <main>
     <nav><a href="https://joysky77.github.io/">← JoySky Tools</a></nav>
     <h1>Check CSV cells before opening them in a spreadsheet.</h1>
-    <p class="lead">Choose a small comma-delimited CSV or paste text. The checker reports cells whose first non-space character is <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code>. Everything runs in this browser tab.</p>
+    <p class="lead">Choose a small comma-delimited CSV or paste text. The checker reports common ASCII and full-width formula markers, plus leading tab or line-break controls. Everything runs in this browser tab.</p>
 
     <section class="panel" aria-labelledby="checker-title">
       <h2 id="checker-title">Check a CSV</h2>
@@ -44,8 +44,9 @@
       </div>
     </section>
 
-    <p><strong>Why these cells are flagged:</strong> spreadsheet programs can interpret formula-like values when a CSV is opened. This conservative check also flags ordinary negative numbers such as <code>-10</code>; review context before changing data.</p>
-    <p><strong>Limits:</strong> 5 MB, 10,000 data records, 100 columns and comma-delimited CSV only. This tool reports locations and short previews. It does not change the source, create a sanitized file, execute formulas, prove exploitability or replace a security review.</p>
+    <p><strong>Why these cells are flagged:</strong> spreadsheet programs can interpret formula-like values when a CSV is opened. This conservative check also flags ordinary negative numbers such as <code>-10</code>; review context before changing data. It recognizes <code>= + - @</code>, the full-width forms <code>＝ ＋ － ＠</code>, and a leading tab, carriage return or line feed.</p>
+    <p><strong>Limits:</strong> 5 MB, 10,000 data records, 100 columns and comma-delimited CSV only. This tool reports locations and short previews. It does not change the source, create a sanitized file, execute formulas, prove exploitability or replace a security review. Spreadsheet products differ, and quoting alone may not remain protective after a file is saved and reopened.</p>
+    <p><strong>References:</strong> <a href="https://owasp.org/www-community/attacks/CSV_Injection">OWASP CSV Injection</a> describes formula-start characters, separator boundaries and spreadsheet-specific trade-offs. <a href="https://cwe.mitre.org/data/definitions/1236.html">MITRE CWE-1236</a> documents improper neutralization of formula elements in CSV output.</p>
 
     <section class="cta">
       <strong>Need a separate cleaned file?</strong>
@@ -61,7 +62,7 @@
   (()=>{
     'use strict';
     const $=id=>document.getElementById(id),MAX_FILE=5*1024*1024;
-    const demo='id,name,note\r\n001,Ada,=2+3\r\n002,Lin," +SUM(1,2)"\r\n003,Mo,@reference\r\n004,Negative,-10\r\n005,Safe,plain text\r\n';
+    const demo='id,name,note\r\n001,Ada,=2+3\r\n002,Lin," +SUM(1,2)"\r\n003,Mo,@reference\r\n004,Negative,-10\r\n005,Safe,plain text\r\n006,Fullwidth,"＝SUM(1,2)"\r\n007,Control,"\tplain"\r\n';
     let fileSerial=0;
     function parseCSV(text){
       text=text.replace(/^\uFEFF/,'');if(!text.length)throw Error('Input is empty. Choose a file or paste CSV.');
@@ -82,10 +83,10 @@
     function analyze(text){
       if(new TextEncoder().encode(text).length>MAX_FILE)throw Error('Input exceeds 5 MB.');
       const rows=parseCSV(text),header=rows.shift();if(!header||!header.length||header.some(v=>!v))throw Error('Column names must be nonempty.');
-      const risks=[];rows.forEach((row,index)=>{if(row.length!==header.length)throw Error(`Data record ${index+1}: expected ${header.length} columns, got ${row.length}.`);row.forEach((value,column)=>{const lead=value.replace(/^\s+/u,'').charAt(0);if('=+-@'.includes(lead)&&lead){risks.push({record:index+1,column:header[column],marker:lead,preview:value.slice(0,80)});}});});return {records:rows.length,risks};
+      const risks=[];rows.forEach((row,index)=>{if(row.length!==header.length)throw Error(`Data record ${index+1}: expected ${header.length} columns, got ${row.length}.`);row.forEach((value,column)=>{const first=value.charAt(0),control={"\t":'TAB',"\r":'CR',"\n":'LF'}[first],lead=value.replace(/^\s+/u,'').charAt(0),marker=control||('=+-@＝＋－＠'.includes(lead)&&lead?lead:'');if(marker){risks.push({record:index+1,column:header[column],marker,preview:value.slice(0,80)});}});});return {records:rows.length,risks};
     }
     function reset(message='Input changed. Run the check again.'){$('result').style.display='none';$('status').className='status';$('status').textContent=message;}
-    $('source').addEventListener('input',()=>{fileSerial++;reset();});$('demo').addEventListener('click',()=>{fileSerial++;$('file').value='';$('source').value=demo;reset('Synthetic example loaded. Four cells will be flagged, including a negative number for manual review.');});
+    $('source').addEventListener('input',()=>{fileSerial++;reset();});$('demo').addEventListener('click',()=>{fileSerial++;$('file').value='';$('source').value=demo;reset('Synthetic example loaded. Six cells will be flagged, including a negative number for manual review.');});
     async function loadFile(){const serial=++fileSerial,file=$('file').files[0];$('source').value='';reset();if(!file)return;try{if(file.size>MAX_FILE)throw Error('File exceeds 5 MB.');const data=await file.arrayBuffer();if(serial!==fileSerial)return;$('source').value=new TextDecoder($('encoding').value,{fatal:true}).decode(data);reset(`Loaded ${file.name}. Run the formula-risk check.`);}catch(error){if(serial===fileSerial){$('status').className='status error';$('status').textContent=`Could not read file: ${error.message}`;}}}
     $('file').addEventListener('change',loadFile);$('encoding').addEventListener('change',loadFile);
     $('run').addEventListener('click',()=>{try{const result=analyze($('source').value);$('record-count').textContent=result.records;$('risk-count').textContent=result.risks.length;const box=$('risk-list');box.replaceChildren();if(!result.risks.length){box.textContent='No formula-like cells were found by this conservative check.';}else{const table=document.createElement('table');table.innerHTML='<thead><tr><th>Record</th><th>Column</th><th>Marker</th><th>Preview</th></tr></thead>';const body=document.createElement('tbody');result.risks.slice(0,50).forEach(item=>{const tr=document.createElement('tr');[item.record,item.column,item.marker,item.preview].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.appendChild(td);});body.appendChild(tr);});table.appendChild(body);box.appendChild(table);if(result.risks.length>50){const note=document.createElement('p');note.className='muted';note.textContent=`Showing 50 of ${result.risks.length} flagged cells.`;box.appendChild(note);}}$('result').style.display='block';$('status').className='status';$('status').textContent='Local check complete. No formulas were executed and the original file was not changed.';}catch(error){$('result').style.display='none';$('status').className='status error';$('status').textContent=error.message;}});
