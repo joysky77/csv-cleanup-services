@@ -1,0 +1,51 @@
+name: Request the USD 12 CSV formula safety fix
+description: Check whether one small CSV fits the fixed service. Use fictional examples only.
+title: "[Formula safety] "
+body:
+  - type: markdown
+    attributes:
+      value: "Use fictional examples only. Do not upload customer records, private files, credentials or payment details. This request is not an order and no payment is due until the scope is accepted."
+  - type: input
+    id: dimensions
+    attributes:
+      label: Approximate dimensions
+      description: "File size, data-row count and column count. Limits: 5 MB, 10,000 data rows and 100 columns."
+      placeholder: "For example: 800 KB, 2,500 data rows, 18 columns"
+    validations:
+      required: true
+  - type: dropdown
+    id: encoding
+    attributes:
+      label: Expected encoding
+      options:
+        - UTF-8 or UTF-8 BOM
+        - GB18030 / Chinese export
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: fictional-example
+    attributes:
+      label: Fictional example
+      description: "Provide a few made-up cells that show the pattern. Never paste real records."
+      placeholder: "Example only: =2+3, @reference, ordinary text"
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Desired deadline and time zone
+      placeholder: "For example: 2026-10-12 17:00 UTC"
+    validations:
+      required: true
+  - type: checkboxes
+    id: acknowledgements
+    attributes:
+      label: Required acknowledgements
+      options:
+        - label: "I have included no real customer data, private files, credentials or payment details in this public issue."
+          required: true
+        - label: "I understand this is comma-delimited CSV only and spreadsheet behavior varies; the service does not provide an absolute security guarantee."
+          required: true
+        - label: "I understand the USD 12 payment is requested only after the scope is accepted."
+          required: true
