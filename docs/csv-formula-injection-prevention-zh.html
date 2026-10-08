@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="了解CSV公式注入的成因、需要检查的单元格、不同处理方法的局限，以及如何在打开CSV前先在本地检查风险。">
+  <title>CSV公式注入怎么防：检查与处理清单</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/csv-formula-injection-prevention-zh.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://joysky77.github.io/csv-cleanup-services/csv-formula-injection-prevention-zh.html">
+  <link rel="alternate" hreflang="en" href="https://joysky77.github.io/csv-cleanup-services/prevent-csv-formula-injection.html">
+  <meta property="og:title" content="CSV公式注入怎么防：检查与处理清单">
+  <meta property="og:description" content="提供清楚的检查步骤、官方资料链接和免费的浏览器本地检查工具。">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/csv-formula-injection-prevention-zh.html">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[{"@type":"Article","inLanguage":"zh-CN","headline":"CSV公式注入怎么防：检查与处理清单","description":"检查和处理CSV中类似公式字段的实用说明。","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@type":"Organization","name":"JoySky Tools"},"publisher":{"@type":"Organization","name":"JoySky Tools"},"mainEntityOfPage":"https://joysky77.github.io/csv-cleanup-services/csv-formula-injection-prevention-zh.html"},{"@type":"FAQPage","inLanguage":"zh-CN","mainEntity":[{"@type":"Question","name":"给CSV每个字段加双引号就够了吗？","acceptedAnswer":{"@type":"Answer","text":"不够。表格软件解析CSV后，仍可能把带引号的字段当作公式。还要检查公式敏感前缀，并按实际使用的表格软件和后续流程进行测试。"}},{"@type":"Question","name":"所有减号开头的值都要修改吗？","acceptedAnswer":{"@type":"Answer","text":"不能一概而论。负数可能是正常数据，稳妥做法是先标记并复核，再按照明确的处理规则决定是否修改。"}},{"@type":"Question","name":"有没有适用于所有表格软件的统一处理规则？","acceptedAnswer":{"@type":"Answer","text":"没有一种方法可以保证适用于所有表格软件和后续导入程序。应保留原文件、记录改动，并测试实际使用流程。"}}]}]}
+  </script>
+  <style>
+    :root{color-scheme:light;--ink:#172033;--muted:#586174;--paper:#f4f7fb;--card:#fff;--blue:#1d4ed8;--teal:#0f766e;--line:#d8e0eb}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.78 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}main{width:min(980px,calc(100% - 32px));margin:auto;padding:28px 0 60px}nav a,footer a,.text-link{color:var(--blue);font-weight:700;text-decoration:none}.hero{padding:58px 0 32px}.eyebrow{color:var(--teal);font-size:.8rem;font-weight:800;letter-spacing:.08em}.hero h1{font-size:clamp(2.55rem,7vw,4.8rem);line-height:1.08;letter-spacing:-.045em;margin:.5rem 0 1rem;max-width:850px}.lead{font-size:1.2rem;color:var(--muted);max-width:780px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}.button{display:inline-block;border-radius:8px;padding:12px 18px;font-weight:760;text-decoration:none;background:var(--blue);color:#fff}.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}.notice{background:#fffbeb;border-left:4px solid #eab308;border-radius:8px;padding:14px 18px;margin:24px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:28px 0}.card,.section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}.card h2{font-size:1.05rem;margin-top:0}.section{margin:18px 0;padding:28px}.section h2{margin-top:0;font-size:1.65rem}.code{font:14px/1.65 ui-monospace,SFMono-Regular,Consolas,"Microsoft YaHei",monospace;background:#f8fafc;border:1px solid var(--line);padding:14px;border-radius:9px;overflow:auto}.risk{color:#9f1239;font-weight:750}.safe{color:#047857;font-weight:750}.steps{padding-left:1.35rem}.steps li{margin:.7rem 0}.offer{background:linear-gradient(135deg,#172554,#1d4ed8);color:#fff;border:0}.offer p{color:#dbeafe}.offer .button{background:#fff;color:#172554}.sources li{margin:.45rem 0}footer{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;color:var(--muted);font-size:.88rem}@media(max-width:760px){.grid{grid-template-columns:1fr}.hero{padding-top:36px}}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="csv-desk-zh.html">← CSV Desk中文页</a> · <a href="https://joysky77.github.io/">JoySky Tools</a> · <a href="prevent-csv-formula-injection.html" lang="en">English</a></nav>
+    <header class="hero">
+      <div class="eyebrow">CSV安全实用说明 · 2026年10月更新</div>
+      <h1>CSV公式注入怎么防？</h1>
+      <p class="lead">CSV字段以类似公式的字符开头时，表格软件可能把普通数据当作活动内容。本页说明如何找出需要复核的单元格、选择有记录的处理规则，并保留可追溯的原文件。</p>
+      <div class="actions">
+        <a class="button" href="csv-formula-risk-checker.html">免费在本地检查CSV</a>
+        <a class="button secondary" href="csv-formula-safety-service.html">查看12美元固定服务</a>
+      </div>
+      <div class="notice"><strong>不要使用密码、密钥或真实客户资料做公开测试。</strong>请先复制文件并使用虚构数据。检查结果只表示该单元格需要复核，不等于文件一定恶意。</div>
+    </header>
+
+    <section class="grid" aria-label="CSV公式注入要点">
+      <article class="card"><h2>风险从哪里出现</h2><p>系统把用户、供应商或导入数据写入CSV后，Excel、LibreOffice Calc等软件可能把部分字段当作公式。</p></article>
+      <article class="card"><h2>哪些开头要检查</h2><p><code>=</code>、<code>+</code>、<code>-</code>、<code>@</code>，前导制表符或换行控制字符，以及全角变体，都值得检查。</p></article>
+      <article class="card"><h2>为什么不能机械修改</h2><p><code>-12.50</code>也可能是正常负数，是否修改不能一概而论。检查工具应先标记，再由明确的业务规则决定是否处理。</p></article>
+    </section>
+
+    <article class="section">
+      <h2>什么是CSV公式注入</h2>
+      <p>MITRE将这类问题归为<a class="text-link" href="https://cwe.mitre.org/data/definitions/1236.html">CWE-1236</a>：程序把不受信任的内容写入CSV，却没有妥善处理可能被解释为公式的元素。CSV本身只是文本，风险通常出现在表格软件打开并解释这些字段时。</p>
+      <p>给字段加双引号可以保留字段里的逗号和换行，但不一定能阻止表格软件把解析后的内容当作公式。OWASP还提醒，分隔符和引号可能让危险字符出现在新单元格的开头，因此不能只检查原始文本行的第一个字符。</p>
+      <div class="code"><span class="risk">需要复核：</span> =HYPERLINK(...)、+SUM(...)、-1+2、@name、[TAB]=...<br><span class="safe">通常是普通文本：</span> report@example.com、item-123、关于等号的说明</div>
+    </article>
+
+    <article class="section">
+      <h2>六步检查与处理清单</h2>
+      <ol class="steps">
+        <li><strong>找出所有CSV导出位置。</strong>记录哪些字段可能包含用户、供应商或外部导入的文本。</li>
+        <li><strong>按照CSV结构解析字段。</strong>不要只逐行搜索原始文本，因为带引号的字段可能包含逗号和换行。</li>
+        <li><strong>检查公式敏感前缀和前导控制字符。</strong>如果系统面向多个地区，还要明确是否检查全角字符。</li>
+        <li><strong>按实际使用的软件制定规则。</strong>在字段前加英文单引号或制表符可能使其显示为文本，但不同表格软件和后续导入程序的行为并不相同。</li>
+        <li><strong>另存处理结果。</strong>保留原文件，并记录每项修改的记录号、列名、规则和修改前后预览。</li>
+        <li><strong>测试完整流程。</strong>先用虚构样例在实际支持的表格软件中打开、保存并重新打开，再测试后续导入环节。</li>
+      </ol>
+    </article>
+
+    <article class="section">
+      <h2>常见问题</h2>
+      <ul>
+        <li><strong>只检查等号。</strong>其他前缀和前导控制字符也可能需要关注。</li>
+        <li><strong>不经复核就修改所有减号开头的值。</strong>这样可能破坏正常的负数数据。</li>
+        <li><strong>用正则表达式直接改原始行。</strong>CSV中的引号和跨行字段需要按记录和字段解析。</li>
+        <li><strong>覆盖唯一的原文件。</strong>另存结果并生成变更记录，才便于检查和回退。</li>
+        <li><strong>承诺适用于所有软件。</strong>OWASP和MITRE都说明了处理方法的局限，最终仍要按实际使用环境验证。</li>
+      </ul>
+    </article>
+
+    <article class="section offer">
+      <h2>按需要选择下一步</h2>
+      <p><strong>免费：</strong>在本地找出需要复核的记录和列。<strong>9美元：</strong>用CSV Desk离线清理并导出JSON变更报告。<strong>12美元：</strong>委托处理一个符合固定范围的CSV，收到修复副本和审计报告。</p>
+      <a class="button" href="csv-formula-risk-checker.html">运行免费检查器</a>
+      <a class="button" href="https://joysky7777.itch.io/csv-desk/purchase">9美元购买CSV Desk</a>
+      <a class="button" href="csv-formula-safety-service.html">查看12美元服务</a>
+    </article>
+
+    <article class="section">
+      <h2>资料来源与适用范围</h2>
+      <ul class="sources">
+        <li><a class="text-link" href="https://community.owasp.org/attacks/CSV_Injection">OWASP：CSV Injection</a></li>
+        <li><a class="text-link" href="https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/21-CSV_Injection/">OWASP Web安全测试指南：CSV Injection</a></li>
+        <li><a class="text-link" href="https://cwe.mitre.org/data/definitions/1236.html">MITRE CWE-1236</a></li>
+      </ul>
+      <p>本页是一般技术说明，不是法律意见、渗透测试或安全保证。免费检查器只在浏览器本地报告需要复核的单元格，不修改源文件。</p>
+    </article>
+
+    <footer>JoySky Tools · <a href="csv-formula-risk-checker.html">免费公式风险检查器</a> · <a href="csv-formula-safety-service.html">12美元固定服务</a> · <a href="csv-desk-zh.html">CSV Desk中文页</a></footer>
+  </main>
+</body>
+</html>
