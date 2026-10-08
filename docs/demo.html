@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSV Desk sample cleanup</title>
+  <style>
+    :root { --ink:#10251f; --muted:#52635e; --paper:#f6f3eb; --card:#fffdf7; --accent:#146b52; --line:#d8ded8; }
+    * { box-sizing:border-box; } body { margin:0; font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+    main { width:min(900px,calc(100% - 32px)); margin:40px auto; }
+    a { color:var(--accent); } h1 { margin-bottom:6px; font-size:clamp(2rem,6vw,3.6rem); letter-spacing:-.04em; }
+    .sub { color:var(--muted); max-width:720px; }
+    .panel { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:24px; }
+    textarea { width:100%; min-height:180px; resize:vertical; border:1px solid var(--line); border-radius:8px; padding:12px; font:14px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace; background:white; }
+    button,.buy { display:inline-block; border:0; border-radius:8px; padding:12px 18px; font-weight:700; text-decoration:none; cursor:pointer; }
+    button { color:white; background:var(--accent); margin-top:12px; }
+    .buy { color:white; background:#8a4517; }
+    pre { overflow:auto; padding:14px; border-radius:8px; background:#eef2ed; min-height:80px; white-space:pre-wrap; }
+    .summary { font-weight:700; }
+    .cta { display:flex; justify-content:space-between; gap:18px; align-items:center; margin-top:24px; padding:20px; border:1px solid var(--line); border-radius:12px; background:white; }
+    @media(max-width:620px){ .cta{align-items:flex-start;flex-direction:column;} }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="./">← CSV Desk</a>
+    <h1>Try a safe sample.</h1>
+    <p class="sub">This preview uses fixed synthetic rows. It demonstrates whitespace trimming and exact duplicate removal without reading a local file or sending anything over the network.</p>
+    <section class="panel">
+      <label for="input"><strong>Synthetic CSV input</strong></label>
+      <textarea id="input" readonly>order_id,customer,city,amount
+00017,"  Lin  ",Xiamen,12.50
+00017,Lin,Xiamen,12.50
+00018,"Chen, Mei","  Fuzhou  ",8.00
+00018,"Chen, Mei",Fuzhou,8.00</textarea>
+      <button id="clean" type="button">Clean this sample</button>
+      <p class="summary" id="summary" aria-live="polite">Ready.</p>
+      <pre id="output" aria-label="Cleaned CSV output"></pre>
+    </section>
+    <section class="cta">
+      <div><strong>Need to clean your own CSV?</strong><br><span class="sub">The $9 download adds local file import, preview, export, formula protection, and a JSON change report.</span></div>
+      <a class="buy" href="https://joysky7777.itch.io/csv-desk">Buy on itch.io</a>
+    </section>
+  </main>
+  <script>
+    const sourceRows = [
+      ['order_id','customer','city','amount'],
+      ['00017','  Lin  ','Xiamen','12.50'],
+      ['00017','Lin','Xiamen','12.50'],
+      ['00018','Chen, Mei','  Fuzhou  ','8.00'],
+      ['00018','Chen, Mei','Fuzhou','8.00']
+    ];
+    const csvCell = value => /[",\n]/.test(value) ? `"${value.replaceAll('"','""')}"` : value;
+    document.querySelector('#clean').addEventListener('click', () => {
+      let trimmed = 0;
+      const seen = new Set();
+      const cleaned = [];
+      for (const row of sourceRows) {
+        const next = row.map(value => { const value2 = value.trim(); if (value2 !== value) trimmed++; return value2; });
+        const key = JSON.stringify(next);
+        if (!seen.has(key)) { seen.add(key); cleaned.push(next); }
+      }
+      document.querySelector('#output').textContent = cleaned.map(row => row.map(csvCell).join(',')).join('\n');
+      document.querySelector('#summary').textContent = `Trimmed ${trimmed} cells and removed ${sourceRows.length - cleaned.length} exact duplicate rows.`;
+    });
+  </script>
+</body>
+</html>
