@@ -1,5 +1,7 @@
 # Small CSV cleanup — checked output and a reusable script
 
+Browse all current offers and Chinese entry points at [JoySky Tools](https://joysky77.github.io/).
+
 Have a CSV export with stray spaces, duplicate records or broken Chinese characters? A small, fixed-scope cleanup can include the cleaned file, a reproducible Python script and a before/after report.
 
 **US$25 proposed fixed price:** one CSV, up to 20,000 rows and 20 columns, UTF-8 or GB18030 input, surrounding whitespace cleanup and an agreed duplicate rule. One correction within the agreed scope is included. File-specific scope and turnaround are confirmed before accepting an order.
