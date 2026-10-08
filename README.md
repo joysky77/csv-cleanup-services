@@ -45,6 +45,16 @@ A separate [US$29 small-CSV offer](https://moltgate.com/yangy0077/clean-one-smal
 
 另有[29美元小型CSV整理入口](https://moltgate.com/yangy0077/clean-one-small-csv-and-explain-every-change/)：最多25条数据行、10列，整条纯文本请求不超过2000字符。只提交虚构或脱敏数据，范围与交付条件以该页面为准。此服务已发布，尚无已确认成交。
 
+
+---
+
+## CSV Desk — $9 offline tool
+
+[CSV Desk 1.0.0](https://joysky7777.itch.io/csv-desk) cleans a small comma-delimited CSV locally in Microsoft Edge without uploading the data. It trims surrounding whitespace, removes exact duplicate rows, optionally makes formula-like cells inert, preserves identifiers as text, previews the cleaned result, and exports a separate UTF-8 BOM CSV plus a JSON change report.
+
+The download includes one standalone HTML tool, a synthetic example, instructions, and an internal-use license. Limits are 5 MB, 10,000 data records and 100 columns. It does not process XLSX files or provide custom cleanup work. Code and documentation were AI-generated and browser-tested; no independent human review is claimed.
+
+Price: USD 9 through itch.io. PayPal checkout is available on the public product page. Platform refund rules and mandatory consumer rights apply.
 ---
 
 ### Delivery Workbench — $19 download
