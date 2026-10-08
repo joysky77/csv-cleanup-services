@@ -85,6 +85,18 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://joysky77.github.io/csv-cleanup-services/csv-reconciliation-checker.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://joysky77.github.io/csv-cleanup-services/csv-reconciliation-service.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://joysky77.github.io/csv-cleanup-services/delivery-workbench.html</loc>
     <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
