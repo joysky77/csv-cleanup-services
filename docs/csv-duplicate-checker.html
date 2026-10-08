@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Count exact duplicate data rows in a small comma-delimited CSV locally. No upload, account or installation.">
+  <title>Free local CSV duplicate row checker — no upload</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/csv-duplicate-checker.html">
+  <meta property="og:title" content="Free local CSV duplicate row checker">
+  <meta property="og:description" content="Count exact duplicate CSV rows in your browser without uploading the file.">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/csv-duplicate-checker.html">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Local CSV Duplicate Row Checker","applicationCategory":"UtilitiesApplication","operatingSystem":"Modern browser","description":"A free browser tool that counts exact duplicate data rows in a small comma-delimited CSV without uploading it.","url":"https://joysky77.github.io/csv-cleanup-services/csv-duplicate-checker.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+  <style>
+    :root{color-scheme:light;--ink:#172033;--muted:#5b6475;--paper:#f4f7fb;--card:#fff;--accent:#1d4ed8;--line:#d9e0eb;--warn:#9a3412}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 system-ui,-apple-system,"Segoe UI",sans-serif}main{width:min(920px,calc(100% - 32px));margin:auto;padding:34px 0 60px}nav a,footer a{color:var(--accent);font-weight:700;text-decoration:none}h1{font-size:clamp(2.3rem,7vw,4.3rem);line-height:1.02;letter-spacing:-.045em;margin:2rem 0 1rem}.lead{font-size:1.18rem;color:var(--muted)}.panel,.cta{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin:28px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}label{display:block;font-weight:750;margin:10px 0 7px}select,input[type=file],textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:11px;background:white}textarea{min-height:180px;resize:vertical}button,.button{display:inline-block;border:0;border-radius:8px;background:var(--accent);color:white;padding:11px 17px;font:inherit;font-weight:750;text-decoration:none;cursor:pointer;margin:.5rem .5rem .2rem 0}.secondary{color:var(--ink);background:transparent;border:1px solid var(--line)}.status{margin:16px 0 0;padding:14px;border-radius:8px;background:#edf2f7}.status.error{color:var(--warn);background:#fff1e9}.result{display:none}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.stat{background:#eef2ff;border-radius:10px;padding:14px;color:var(--muted)}.stat strong{display:block;font-size:1.8rem;color:var(--ink)}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line)}small,.muted{color:var(--muted)}footer{border-top:1px solid var(--line);margin-top:42px;padding-top:22px;color:var(--muted);font-size:.9rem}@media(max-width:680px){.grid,.stats{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="https://joysky77.github.io/">← JoySky Tools</a></nav>
+    <h1>Find exact duplicate CSV rows locally.</h1>
+    <p class="lead">Choose a small comma-delimited CSV or paste text. The checker counts repeated data rows and reports their record numbers without uploading or changing the file.</p>
+
+    <section class="panel" aria-labelledby="checker-title">
+      <h2 id="checker-title">Check a CSV</h2>
+      <div class="grid">
+        <div><label for="encoding">File encoding</label><select id="encoding"><option value="utf-8">UTF-8</option><option value="gb18030">GB18030 / Chinese exports</option></select></div>
+        <div><label for="file">CSV file, up to 5 MB</label><input id="file" type="file" accept=".csv,text/csv"></div>
+      </div>
+      <label for="source">Or paste comma-delimited CSV</label>
+      <textarea id="source" spellcheck="false" placeholder="id,name&#10;001,Ada&#10;001,Ada"></textarea>
+      <button id="demo" type="button" class="secondary">Load synthetic example</button>
+      <button id="run" type="button">Check exact duplicates</button>
+      <div id="status" class="status" role="status" aria-live="polite">Your data stays in this browser tab. Nothing is uploaded.</div>
+      <div id="result" class="result">
+        <div class="stats">
+          <div class="stat">Data records<strong id="input-count">—</strong></div>
+          <div class="stat">Unique rows<strong id="unique-count">—</strong></div>
+          <div class="stat">Duplicates<strong id="duplicate-count">—</strong></div>
+        </div>
+        <h3>Duplicate record numbers</h3>
+        <div id="duplicate-list"></div>
+      </div>
+    </section>
+
+    <p><strong>What counts as a duplicate?</strong> Every parsed column must match exactly. Spaces, letter case and numeric formatting remain significant: <code>001</code> differs from <code>1</code>, and <code>Ada</code> differs from <code> Ada </code>. The first row is treated as the header. Record numbers refer to data records, so multiline quoted fields do not change the numbering.</p>
+    <p><strong>Limits:</strong> 5 MB, 10,000 data records, 100 columns and comma-delimited CSV only. This checker does not remove rows, write an output file, infer business duplicate keys or prove that two different customer records represent the same person.</p>
+
+    <section class="cta">
+      <strong>Need cleanup or an agreed duplicate rule?</strong>
+      <p>CSV Desk can remove exact duplicate rows and export a separate cleaned CSV plus JSON report. The fixed-scope service is for rules that need agreement before processing.</p>
+      <a class="button" href="https://joysky7777.itch.io/csv-desk/purchase">Buy CSV Desk for $9</a>
+      <a class="button secondary" href="https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html">Review the $25 service</a>
+      <a class="button secondary" href="https://www.paypal.com/paypalme/joysky77">Support this free checker</a>
+      <p><small>Optional support is not a CSV Desk purchase or a service order.</small></p>
+    </section>
+    <footer>Local CSV Duplicate Row Checker · Free · No upload · <a href="https://joysky77.github.io/csv-cleanup-services/csv-encoding-checker.html">Check CSV encoding</a></footer>
+  </main>
+  <script>
+  (()=>{
+    'use strict';
+    const $=id=>document.getElementById(id),MAX_FILE=5*1024*1024;
+    const demo='id,name,note\r\n001,Ada,"Hello, world"\r\n001,Ada,"Hello, world"\r\n002,林,"Two\nlines"\r\n002,林,"Two\nlines"\r\n003,Mo,001\r\n';
+    let fileSerial=0;
+    function parseCSV(text){
+      text=text.replace(/^\uFEFF/,'');
+      if(!text.length)throw Error('Input is empty. Choose a file or paste CSV.');
+      const rows=[];let row=[],cell='',mode='plain',started=false;
+      const endCell=()=>{row.push(cell);cell='';mode='plain';};
+      const endRow=()=>{endCell();rows.push(row);row=[];started=false;if(rows.length>10001)throw Error('Limit exceeded: 10,000 data records.');};
+      for(let i=0;i<text.length;i++){
+        const c=text[i];started=true;
+        if(mode==='quoted'){
+          if(c==='"'){if(text[i+1]==='"'){cell+='"';i++;}else mode='closed';}else cell+=c;
+        }else if(c===','){endCell();if(row.length>=100)throw Error('Limit exceeded: 100 columns.');}
+        else if(c==='\r'||c==='\n'){if(c==='\r'&&text[i+1]==='\n')i++;endRow();}
+        else if(mode==='closed')throw Error('Unexpected character after a closing quote. Use comma-delimited CSV.');
+        else if(c==='"'){if(cell.length)throw Error('A quote inside an unquoted value is invalid.');mode='quoted';}
+        else cell+=c;
+      }
+      if(mode==='quoted')throw Error('An opening quote has no closing quote.');
+      if(started||row.length||cell.length)endRow();
+      return rows;
+    }
+    function analyze(text){
+      if(new TextEncoder().encode(text).length>MAX_FILE)throw Error('Input exceeds 5 MB.');
+      const rows=parseCSV(text),header=rows.shift();
+      if(!header||!header.length||header.some(v=>!v))throw Error('Column names must be nonempty.');
+      const seen=new Map(),duplicates=[];
+      rows.forEach((row,index)=>{
+        if(row.length!==header.length)throw Error(`Data record ${index+1}: expected ${header.length} columns, got ${row.length}.`);
+        const key=JSON.stringify(row),first=seen.get(key);
+        if(first!==undefined)duplicates.push({record:index+1,firstRecord:first});else seen.set(key,index+1);
+      });
+      return {input:rows.length,unique:seen.size,duplicates};
+    }
+    function reset(message='Input changed. Run the check again.'){$('result').style.display='none';$('status').className='status';$('status').textContent=message;}
+    $('source').addEventListener('input',()=>{fileSerial++;reset();});
+    $('demo').addEventListener('click',()=>{fileSerial++;$('file').value='';$('source').value=demo;reset('Synthetic example loaded. Run the check to find two duplicate records.');});
+    async function loadFile(){
+      const serial=++fileSerial,file=$('file').files[0];$('source').value='';reset();if(!file)return;
+      try{if(file.size>MAX_FILE)throw Error('File exceeds 5 MB.');const data=await file.arrayBuffer();if(serial!==fileSerial)return;$('source').value=new TextDecoder($('encoding').value,{fatal:true}).decode(data);reset(`Loaded ${file.name}. Run the duplicate check.`);}catch(error){if(serial===fileSerial){$('status').className='status error';$('status').textContent=`Could not read file: ${error.message}`;}}
+    }
+    $('file').addEventListener('change',loadFile);$('encoding').addEventListener('change',loadFile);
+    $('run').addEventListener('click',()=>{
+      try{
+        const result=analyze($('source').value);$('input-count').textContent=result.input;$('unique-count').textContent=result.unique;$('duplicate-count').textContent=result.duplicates.length;
+        const box=$('duplicate-list');box.replaceChildren();
+        if(!result.duplicates.length){box.textContent='No exact duplicate data rows were found.';}else{const table=document.createElement('table');table.innerHTML='<thead><tr><th>Duplicate record</th><th>First matching record</th></tr></thead>';const body=document.createElement('tbody');result.duplicates.slice(0,50).forEach(item=>{const tr=document.createElement('tr');[item.record,item.firstRecord].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.appendChild(td);});body.appendChild(tr);});table.appendChild(body);box.appendChild(table);if(result.duplicates.length>50){const note=document.createElement('p');note.className='muted';note.textContent=`Showing 50 of ${result.duplicates.length} duplicate records.`;box.appendChild(note);}}
+        $('result').style.display='block';$('status').className='status';$('status').textContent='Local duplicate check complete. The original file was not changed.';
+      }catch(error){$('result').style.display='none';$('status').className='status error';$('status').textContent=error.message;}
+    });
+  })();
+  </script>
+</body>
+</html>
