@@ -1,0 +1,26 @@
+name: 提交CSV整理询价
+description: 请只用虚构示例说明一项小型CSV整理需求。
+title: "[中文询价] "
+body:
+  - type: markdown
+    attributes:
+      value: "请只使用虚构示例，不要上传客户资料、个人信息、账号密码或付款信息。提交询价不等于付费下单。"
+  - type: textarea
+    id: requirements
+    attributes:
+      label: 输入文件和需要的结果
+      description: "请说明大致行数、列数、已知编码、要处理的问题、重复判断规则和期望时间。"
+    validations:
+      required: true
+  - type: textarea
+    id: fictional-example
+    attributes:
+      label: 虚构示例
+      description: "请填写几行虚构数据，并说明希望得到的结果。"
+  - type: checkboxes
+    id: public-data
+    attributes:
+      label: 公开信息确认
+      options:
+        - label: "我没有在本询价中提供真实客户资料、个人信息、账号密码或付款信息。"
+          required: true
