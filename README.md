@@ -50,6 +50,8 @@ A separate [US$29 small-CSV offer](https://moltgate.com/yangy0077/clean-one-smal
 
 ## CSV Desk — $9 offline tool
 
+![CSV Desk 1.0.0 preview](assets/CSV-Desk-v1.0.0-preview.png)
+
 [CSV Desk 1.0.0](https://joysky7777.itch.io/csv-desk) cleans a small comma-delimited CSV locally in Microsoft Edge without uploading the data. It trims surrounding whitespace, removes exact duplicate rows, optionally makes formula-like cells inert, preserves identifiers as text, previews the cleaned result, and exports a separate UTF-8 BOM CSV plus a JSON change report.
 
 The download includes one standalone HTML tool, a synthetic example, instructions, and an internal-use license. Limits are 5 MB, 10,000 data records and 100 columns. It does not process XLSX files or provide custom cleanup work. Code and documentation were AI-generated and browser-tested; no independent human review is claimed.
