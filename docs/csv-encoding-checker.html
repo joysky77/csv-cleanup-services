@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Check whether a small CSV looks like UTF-8 or GB18030 locally in Microsoft Edge. Preview the text without uploading the file.">
+  <title>Free local CSV encoding checker — UTF-8 or GB18030</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/csv-encoding-checker.html">
+  <meta property="og:title" content="Free local CSV encoding checker">
+  <meta property="og:description" content="Inspect a CSV locally and check whether it decodes as UTF-8 or GB18030. No upload.">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/csv-encoding-checker.html">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Local CSV Encoding Checker",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Modern browser",
+    "description": "A free browser tool that locally checks whether a CSV sample decodes as UTF-8 or GB18030 and shows a text preview without uploading the file.",
+    "url": "https://joysky77.github.io/csv-cleanup-services/csv-encoding-checker.html",
+    "offers": {"@type":"Offer","price":"0","priceCurrency":"USD"}
+  }
+  </script>
+  <style>
+    :root { color-scheme:light; --ink:#10251f; --muted:#52635e; --paper:#f6f3eb; --card:#fffdf7; --accent:#146b52; --line:#d8ded8; --warn:#8a5a00; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+    main { width:min(900px,calc(100% - 32px)); margin:auto; padding:36px 0 64px; }
+    nav a,footer a { color:var(--accent); font-weight:700; text-decoration:none; }
+    h1 { font-size:clamp(2.35rem,7vw,4.4rem); line-height:1.03; letter-spacing:-.045em; margin:2rem 0 1rem; }
+    .lead { color:var(--muted); font-size:1.18rem; }
+    .panel,.cta { background:var(--card); border:1px solid var(--line); border-radius:13px; padding:24px; margin:28px 0; }
+    label { display:block; font-weight:750; margin-bottom:8px; }
+    input[type=file] { width:100%; padding:12px; border:1px solid var(--line); border-radius:8px; background:white; }
+    .status { margin:18px 0 0; padding:15px; border-radius:8px; background:#e9ede8; min-height:55px; }
+    .status.warn { color:var(--warn); background:#fff2d7; }
+    .result { display:none; }
+    dl { display:grid; grid-template-columns:max-content 1fr; gap:7px 18px; } dt { font-weight:750; } dd { margin:0; }
+    pre { max-height:360px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; background:#eff1ed; border:1px solid var(--line); border-radius:8px; padding:16px; }
+    .button { display:inline-block; color:white; background:var(--accent); padding:11px 18px; border-radius:8px; text-decoration:none; font-weight:750; margin:.35rem .5rem .2rem 0; }
+    .secondary { color:var(--ink); background:transparent; border:1px solid var(--line); }
+    footer { border-top:1px solid var(--line); margin-top:42px; padding-top:22px; color:var(--muted); font-size:.9rem; }
+    @media(max-width:620px){dl{grid-template-columns:1fr;gap:2px}dd{margin-bottom:10px}}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="./">← CSV Desk</a></nav>
+    <h1>Check a CSV encoding locally.</h1>
+    <p class="lead">Choose a small CSV and see whether its first 64 KB decodes strictly as UTF-8 or GB18030. The file stays in this browser tab and is never uploaded.</p>
+
+    <section class="panel" aria-labelledby="checker-title">
+      <h2 id="checker-title">Select a CSV</h2>
+      <label for="file">CSV file, up to 5 MB</label>
+      <input id="file" type="file" accept=".csv,text/csv">
+      <div id="status" class="status" role="status" aria-live="polite">No file selected.</div>
+      <div id="result" class="result">
+        <dl>
+          <dt>Likely encoding</dt><dd id="encoding"></dd>
+          <dt>Evidence</dt><dd id="evidence"></dd>
+          <dt>Bytes inspected</dt><dd id="bytes"></dd>
+        </dl>
+        <h3>Text preview</h3>
+        <pre id="preview"></pre>
+      </div>
+    </section>
+
+    <p><strong>Limits:</strong> this is a decoding check, not a guarantee of the source system's encoding. ASCII-only samples are ambiguous because they are valid in both encodings. The checker does not validate CSV columns, repair data, or write an output file. Keep the original and confirm representative Chinese text in the receiving application.</p>
+
+    <section class="cta">
+      <strong>Need the next step?</strong>
+      <p>CSV Desk 1.0.0 locally cleans UTF-8 or GB18030 CSV files and exports a separate UTF-8 BOM result with a JSON change report. If the duplicate rule or acceptance checks need agreement, use the fixed-scope service inquiry.</p>
+      <a class="button" href="https://joysky7777.itch.io/csv-desk/purchase">Buy CSV Desk for $9</a>
+      <a class="button secondary" href="csv-cleanup-service.html">Review the $25 service</a>
+    </section>
+
+    <footer>Local CSV Encoding Checker · Free · No upload · <a href="fix-chinese-csv-encoding.html">Read the encoding guide</a></footer>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const input = document.getElementById('file');
+      const status = document.getElementById('status');
+      const result = document.getElementById('result');
+      const encoding = document.getElementById('encoding');
+      const evidence = document.getElementById('evidence');
+      const bytes = document.getElementById('bytes');
+      const preview = document.getElementById('preview');
+      const MAX_FILE = 5 * 1024 * 1024;
+      const SAMPLE = 64 * 1024;
+
+      const decode = (buffer, label) => new TextDecoder(label, { fatal: true }).decode(buffer);
+      const showError = (message) => {
+        status.className = 'status warn';
+        status.textContent = message;
+        result.style.display = 'none';
+      };
+
+      input.addEventListener('change', async () => {
+        const file = input.files && input.files[0];
+        if (!file) {
+          status.className = 'status';
+          status.textContent = 'No file selected.';
+          result.style.display = 'none';
+          return;
+        }
+        if (file.size > MAX_FILE) {
+          showError('The file is larger than 5 MB. Choose a smaller sample.');
+          return;
+        }
+        try {
+          const buffer = await file.slice(0, SAMPLE).arrayBuffer();
+          const data = new Uint8Array(buffer);
+          const hasUtf8Bom = data.length >= 3 && data[0] === 0xef && data[1] === 0xbb && data[2] === 0xbf;
+          const hasHighBytes = data.some((value) => value >= 0x80);
+          let label;
+          let reason;
+          let text;
+          try {
+            text = decode(buffer, 'utf-8').replace(/^\uFEFF/, '');
+            if (hasUtf8Bom) {
+              label = 'UTF-8 with BOM';
+              reason = 'The sample begins with the UTF-8 BOM and decodes strictly as UTF-8.';
+            } else if (!hasHighBytes) {
+              label = 'ASCII-only sample (ambiguous)';
+              reason = 'The inspected bytes are ASCII, which is valid in both UTF-8 and GB18030. Inspect a sample containing Chinese text.';
+            } else {
+              label = 'Likely UTF-8';
+              reason = 'The sample contains non-ASCII bytes and decodes strictly as UTF-8.';
+            }
+          } catch (utf8Error) {
+            try {
+              text = decode(buffer, 'gb18030');
+              label = 'Likely GB18030';
+              reason = 'Strict UTF-8 decoding failed, while GB18030 decoding succeeded. Confirm the preview against known source values.';
+            } catch (gbError) {
+              showError('The sample did not decode strictly as UTF-8 or GB18030. It may be another encoding or contain damaged bytes.');
+              return;
+            }
+          }
+          encoding.textContent = label;
+          evidence.textContent = reason;
+          bytes.textContent = `${data.length.toLocaleString()} of ${file.size.toLocaleString()}`;
+          preview.textContent = text.slice(0, 6000);
+          result.style.display = 'block';
+          status.className = 'status';
+          status.textContent = 'Local check complete. Review the evidence and preview below.';
+        } catch (error) {
+          showError('This browser could not read the file sample. No data was uploaded.');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
