@@ -36,6 +36,12 @@ Need a repaired copy rather than a report? The [CSV Formula Safety Fix](https://
 
 中文：固定价格12美元，处理一个符合上述上限的逗号分隔CSV，交付独立修复副本和JSON审计报告。公开询问只用虚构样例，确认范围后才安排私下传输和PayPal付款。
 
+## Free CSV reconciliation checker and fixed USD 29 service
+
+[Compare two CSV files locally](https://joysky77.github.io/csv-cleanup-services/csv-reconciliation-checker.html) by one exact, nonempty, unique key. The free browser checker reports unmatched keys and changed values in shared columns without uploading either file.
+
+For a reproducible delivery package, the [CSV Reconciliation Service](https://joysky77.github.io/csv-cleanup-services/csv-reconciliation-service.html) accepts two comma-delimited CSV files, each up to 20,000 rows and 50 columns. The fixed USD 29 scope includes left-only and right-only key CSVs, a changed-cell CSV, a JSON report with source hashes, and the Python script used. [Open a scope request](https://github.com/joysky77/csv-cleanup-services/issues/new?template=reconciliation-request.yml) with fictional examples only.
+
 ## Request a quote
 
 [Review the full US$25 scope](https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html) or [open the short purchase inquiry form](https://github.com/joysky77/csv-cleanup-services/issues/new?template=quote-request.yml).
