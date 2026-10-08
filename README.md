@@ -44,3 +44,19 @@ Local verification passed for BOM/Chinese text, quoted commas, duplicate counts,
 A separate [US$29 small-CSV offer](https://moltgate.com/yangy0077/clean-one-small-csv-and-explain-every-change/) is now available through Moltgate: at most 25 data rows, 10 columns and a 2,000-character plain-text request. Use fictional or redacted data. It includes the cleaned CSV, a change report and an explanation; delivery is within 3 business days after complete in-scope input, with one correction requested within 7 days. Read the published scope before checkout. Moltgate processes the buyer payment; this listing has no confirmed sales yet.
 
 另有[29美元小型CSV整理入口](https://moltgate.com/yangy0077/clean-one-small-csv-and-explain-every-change/)：最多25条数据行、10列，整条纯文本请求不超过2000字符。只提交虚构或脱敏数据，范围与交付条件以该页面为准。此服务已发布，尚无已确认成交。
+
+---
+
+### Delivery Workbench — $19 download
+
+Turn a structured software-project brief into a source-linked delivery graph on your own computer. Inspect dependencies, edit work units, review planning blockers, and export JSON or Markdown.
+
+Includes Python source, a synthetic example, a setup guide, and internal commercial-use rights. Requires Python 3.10+ and a modern browser. No paid AI account or cloud hosting is needed. Rule-based recommendations require review; arbitrary documents are not automatically understood. The input format and naming rules are documented in the supplied example and README. AI assisted development is disclosed.
+
+Price: USD 19 for version 0.4.1. No subscription. Includes one setup troubleshooting exchange within seven days of delivery. Custom conversion, consulting and future upgrades are not included.
+
+Before paying, email yangy0077@gmail.com with “Delivery Workbench inquiry” and your operating system. We will confirm compatibility, usage terms, payment instructions, and delivery arrangements. Please send no confidential project files. Payment is requested only after the order is agreed. Delivery uses the account owner's existing PayPal account and is confirmed by actual payment, not by screenshots supplied by a buyer.
+
+Download is delivered after payment verification. This is an independent local planning tool; it does not approve staffing, funding, procurement or deployment, and is not endorsed by an external platform.
+
+![Synthetic example in the local workbench](delivery-workbench-v0.4.1-preview.png)
