@@ -16,7 +16,7 @@ The included demonstration implements exact duplicates across all columns. A dif
 
 Optional support for the public tools is available through the repository Sponsor button. Sponsorship is not a product purchase, service order or proof of income.
 
-Need to count repeated records first? [Run the free local CSV duplicate-row checker](https://joysky77.github.io/csv-cleanup-services/csv-duplicate-checker.html). It reports exact duplicate data-record numbers without uploading or changing the file.
+Need to count repeated records first? [Download the fixed version 1.0.0 HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/duplicate-checker-v1.0.0/CSV-Duplicate-Row-Checker-v1.0.0.html) or [run the free local CSV duplicate-row checker](https://joysky77.github.io/csv-cleanup-services/csv-duplicate-checker.html). It reports exact duplicate data-record numbers without uploading or changing the file.
 
 ## Request a quote
 
