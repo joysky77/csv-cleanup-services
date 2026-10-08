@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fixed-scope CSV cleanup service: whitespace, agreed duplicate rules, encoding checks, reproducible script, cleaned file, and change report. Proposed $25.">
+  <title>Small CSV cleanup service — checked output and change report</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html">
+  <meta property="og:title" content="Small CSV cleanup service — checked output and change report">
+  <meta property="og:description" content="One CSV, explicit rules, reproducible cleanup, and a reviewable before/after report. Proposed fixed price: $25.">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "name": "Small CSV Cleanup",
+        "serviceType": "Fixed-scope CSV data cleanup",
+        "description": "Cleanup of one small CSV with explicit whitespace and duplicate rules, a reproducible script, cleaned file, and change report.",
+        "url": "https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html",
+        "provider": {"@type": "Organization", "name": "JoySky Tools"},
+        "areaServed": "Worldwide",
+        "offers": {
+          "@type": "Offer",
+          "price": "25.00",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://github.com/joysky77/csv-cleanup-services/issues/new?template=quote-request.yml"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {"@type": "Question", "name": "What is included in the proposed $25 scope?", "acceptedAnswer": {"@type": "Answer", "text": "One CSV up to 20,000 rows and 20 columns, UTF-8 or GB18030 input, surrounding-whitespace cleanup, one agreed duplicate rule, a cleaned file, reproducible Python script, change report, and one correction within the agreed scope."}},
+          {"@type": "Question", "name": "Can I upload my customer data in the quote issue?", "acceptedAnswer": {"@type": "Answer", "text": "No. Public quote issues must use fictional examples only. Private data handling and sample exchange must be agreed separately before an order is accepted."}},
+          {"@type": "Question", "name": "When is payment requested?", "acceptedAnswer": {"@type": "Answer", "text": "Payment is requested only after the exact file scope, rules, acceptance criteria, turnaround, private exchange, and delivery arrangements are agreed."}}
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root { color-scheme:light; --ink:#10251f; --muted:#52635e; --paper:#f6f3eb; --card:#fffdf7; --accent:#146b52; --line:#d8ded8; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); }
+    main { width:min(1000px,calc(100% - 32px)); margin:auto; }
+    nav { padding-top:28px; } nav a { color:var(--accent); text-decoration:none; font-weight:700; }
+    .hero { padding:58px 0 42px; max-width:820px; }
+    .eyebrow { color:var(--accent); font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:.78rem; }
+    h1 { font-size:clamp(2.45rem,7vw,5rem); line-height:1; letter-spacing:-.05em; margin:.45rem 0 1.1rem; }
+    h2 { line-height:1.2; }
+    .lead { color:var(--muted); font-size:1.2rem; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; margin:25px 0 10px; }
+    .button { display:inline-block; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:750; }
+    .primary { color:white; background:var(--accent); }
+    .secondary { color:var(--ink); background:var(--card); border:1px solid var(--line); }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:10px 0 50px; }
+    .card,details,.notice { background:var(--card); border:1px solid var(--line); border-radius:11px; padding:20px; }
+    .card h2 { font-size:1.05rem; margin:0 0 7px; }
+    .card p,.muted,details p { color:var(--muted); }
+    .scope { border-top:1px solid var(--line); padding:34px 0 48px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+    .notice { margin-bottom:48px; border-color:#9fc3b7; }
+    .faq { border-top:1px solid var(--line); padding:34px 0 60px; }
+    details { margin:10px 0; padding:14px 18px; } summary { cursor:pointer; font-weight:750; } details p { margin:.6rem 0 0; }
+    footer { border-top:1px solid var(--line); padding:22px 0 36px; color:var(--muted); font-size:.88rem; }
+    @media(max-width:760px){.grid,.scope{grid-template-columns:1fr}.hero{padding-top:38px}}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="./">← JoySky Tools</a></nav>
+    <section class="hero">
+      <div class="eyebrow">Fixed scope · proposed $25</div>
+      <h1>Clean one CSV with explicit, reviewable rules.</h1>
+      <p class="lead">Receive a separate cleaned file, reproducible Python script, and before/after report. Leading-zero identifiers, quoted commas, Chinese text, and the original source are deliberately protected.</p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/joysky77/csv-cleanup-services/issues/new?template=quote-request.yml">Request a quote</a>
+        <a class="button secondary" href="demo.html">Try the synthetic demo</a>
+        <a class="button secondary" href="how-to-clean-csv-offline.html">Read the cleanup checklist</a>
+      </div>
+      <p class="muted">Use fictional examples only in a public issue. A quote request is not an order, and no payment is requested before the scope is agreed.</p>
+    </section>
+
+    <section class="grid" aria-label="Service deliverables">
+      <article class="card"><h2>Checked output</h2><p>UTF-8 or GB18030 input, consistent column counts, preserved text identifiers, and a separate output file.</p></article>
+      <article class="card"><h2>Agreed duplicate rule</h2><p>The default demonstration removes only exact duplicate rows. Any business-key rule is written and approved first.</p></article>
+      <article class="card"><h2>Reproducible delivery</h2><p>The cleaned CSV is accompanied by the script used and a JSON report describing counts and changes.</p></article>
+    </section>
+
+    <section class="scope">
+      <div>
+        <h2>Proposed $25 scope</h2>
+        <ul>
+          <li>One CSV, up to 20,000 rows and 20 columns</li>
+          <li>UTF-8 or GB18030 input</li>
+          <li>Surrounding-whitespace cleanup</li>
+          <li>One explicitly agreed duplicate rule</li>
+          <li>One correction within the agreed scope</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Confirmed before ordering</h2>
+        <p>Exact transformations, acceptance criteria, deadline, private file exchange, delivery method, and payment instructions are confirmed first. XLSX conversion, inferred business rules, research, enrichment, and additional datasets require a separate proposal.</p>
+      </div>
+    </section>
+
+    <div class="notice"><strong>Privacy boundary:</strong> do not upload customer records, personal data, credentials, or payment details to GitHub. The public issue should contain only dimensions, rule descriptions, and fictional examples. Private data handling must be agreed separately.</div>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions before requesting a quote</h2>
+      <details><summary>What does the $25 proposal include?</summary><p>One file within the stated size limits, the agreed cleanup, cleaned output, reproducible script, change report, and one correction within the agreed scope.</p></details>
+      <details><summary>Can I post my real CSV in the issue?</summary><p>No. Use fictional examples only. Private data exchange and handling must be agreed before the order is accepted.</p></details>
+      <details><summary>When do I pay?</summary><p>Only after scope, acceptance criteria, timing, private exchange, payment instructions, and delivery arrangements are agreed.</p></details>
+    </section>
+
+    <footer>Small CSV cleanup · Proposed fixed price USD 25 · AI-assisted delivery with reproducible checks</footer>
+  </main>
+</body>
+</html>
