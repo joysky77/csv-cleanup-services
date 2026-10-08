@@ -14,6 +14,8 @@ The included demonstration implements exact duplicates across all columns. A dif
 
 [Download the versioned HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/encoding-checker-v1.0.0/CSV-Encoding-Checker-v1.0.0.html) or [run the web version](https://joysky77.github.io/csv-cleanup-services/csv-encoding-checker.html). It checks a CSV sample locally for strict UTF-8 or GB18030 decoding and previews Chinese text without uploading the selected file. The free checker diagnoses encoding only; CSV Desk adds cleanup and export.
 
+Optional support for the public tools is available through the repository Sponsor button. Sponsorship is not a product purchase, service order or proof of income.
+
 ## Request a quote
 
 [Review the full US$25 scope](https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html) or [open the short purchase inquiry form](https://github.com/joysky77/csv-cleanup-services/issues/new?template=quote-request.yml).
