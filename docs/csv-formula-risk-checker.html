@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Find formula-like cells in a small CSV locally before opening it in a spreadsheet. No upload, account or installation.">
+  <title>Free local CSV formula risk checker — no upload</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/csv-formula-risk-checker.html">
+  <meta property="og:title" content="Free local CSV formula risk checker">
+  <meta property="og:description" content="Find formula-like CSV cells in your browser without uploading the file.">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/csv-formula-risk-checker.html">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Local CSV Formula Risk Checker","applicationCategory":"SecurityApplication","operatingSystem":"Modern browser","description":"A free browser tool that reports formula-like cells in a small CSV without uploading or changing it.","url":"https://joysky77.github.io/csv-cleanup-services/csv-formula-risk-checker.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+  <style>
+    :root{color-scheme:light;--ink:#172033;--muted:#5b6475;--paper:#f4f7fb;--card:#fff;--accent:#1d4ed8;--line:#d9e0eb;--warn:#9a3412}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 system-ui,-apple-system,"Segoe UI",sans-serif}main{width:min(960px,calc(100% - 32px));margin:auto;padding:34px 0 60px}nav a,footer a{color:var(--accent);font-weight:700;text-decoration:none}h1{font-size:clamp(2.3rem,7vw,4.3rem);line-height:1.02;letter-spacing:-.045em;margin:2rem 0 1rem}.lead{font-size:1.18rem;color:var(--muted)}.panel,.cta{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin:28px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}label{display:block;font-weight:750;margin:10px 0 7px}select,input[type=file],textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:11px;background:white}textarea{min-height:180px;resize:vertical}button,.button{display:inline-block;border:0;border-radius:8px;background:var(--accent);color:white;padding:11px 17px;font:inherit;font-weight:750;text-decoration:none;cursor:pointer;margin:.5rem .5rem .2rem 0}.secondary{color:var(--ink);background:transparent;border:1px solid var(--line)}.status{margin:16px 0 0;padding:14px;border-radius:8px;background:#edf2f7}.status.error{color:var(--warn);background:#fff1e9}.result{display:none}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}.stat{background:#eef2ff;border-radius:10px;padding:14px;color:var(--muted)}.stat strong{display:block;font-size:1.8rem;color:var(--ink)}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line);vertical-align:top}code{overflow-wrap:anywhere}small,.muted{color:var(--muted)}footer{border-top:1px solid var(--line);margin-top:42px;padding-top:22px;color:var(--muted);font-size:.9rem}@media(max-width:680px){.grid,.stats{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="https://joysky77.github.io/">← JoySky Tools</a></nav>
+    <h1>Check CSV cells before opening them in a spreadsheet.</h1>
+    <p class="lead">Choose a small comma-delimited CSV or paste text. The checker reports cells whose first non-space character is <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code>. Everything runs in this browser tab.</p>
+
+    <section class="panel" aria-labelledby="checker-title">
+      <h2 id="checker-title">Check a CSV</h2>
+      <div class="grid">
+        <div><label for="encoding">File encoding</label><select id="encoding"><option value="utf-8">UTF-8</option><option value="gb18030">GB18030 / Chinese exports</option></select></div>
+        <div><label for="file">CSV file, up to 5 MB</label><input id="file" type="file" accept=".csv,text/csv"></div>
+      </div>
+      <label for="source">Or paste comma-delimited CSV</label>
+      <textarea id="source" spellcheck="false" placeholder="id,name,note&#10;001,Ada,=2+3&#10;002,Lin,plain text"></textarea>
+      <button id="demo" type="button" class="secondary">Load synthetic example</button>
+      <button id="run" type="button">Find formula-like cells</button>
+      <div id="status" class="status" role="status" aria-live="polite">Your data stays in this browser tab. Nothing is uploaded.</div>
+      <div id="result" class="result">
+        <div class="stats">
+          <div class="stat">Data records<strong id="record-count">—</strong></div>
+          <div class="stat">Flagged cells<strong id="risk-count">—</strong></div>
+        </div>
+        <h3>Flagged locations</h3>
+        <div id="risk-list"></div>
+      </div>
+    </section>
+
+    <p><strong>Why these cells are flagged:</strong> spreadsheet programs can interpret formula-like values when a CSV is opened. This conservative check also flags ordinary negative numbers such as <code>-10</code>; review context before changing data.</p>
+    <p><strong>Limits:</strong> 5 MB, 10,000 data records, 100 columns and comma-delimited CSV only. This tool reports locations and short previews. It does not change the source, create a sanitized file, execute formulas, prove exploitability or replace a security review.</p>
+
+    <section class="cta">
+      <strong>Need a separate cleaned file?</strong>
+      <p>CSV Desk can optionally make formula-like cells inert, then export a separate UTF-8 BOM CSV and JSON change report. The fixed-scope service is available when rules need agreement first.</p>
+      <a class="button" href="https://joysky7777.itch.io/csv-desk/purchase">Buy CSV Desk for $9</a>
+      <a class="button secondary" href="https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html">Review the $25 service</a>
+      <a class="button secondary" href="https://www.paypal.com/paypalme/joysky77">Support this free checker</a>
+      <p><small>Optional support is not a CSV Desk purchase or a service order.</small></p>
+    </section>
+    <footer>Local CSV Formula Risk Checker · Free · No upload · <a href="csv-encoding-checker.html">Check encoding</a> · <a href="csv-duplicate-checker.html">Check duplicates</a></footer>
+  </main>
+  <script>
+  (()=>{
+    'use strict';
+    const $=id=>document.getElementById(id),MAX_FILE=5*1024*1024;
+    const demo='id,name,note\r\n001,Ada,=2+3\r\n002,Lin," +SUM(1,2)"\r\n003,Mo,@reference\r\n004,Negative,-10\r\n005,Safe,plain text\r\n';
+    let fileSerial=0;
+    function parseCSV(text){
+      text=text.replace(/^\uFEFF/,'');if(!text.length)throw Error('Input is empty. Choose a file or paste CSV.');
+      const rows=[];let row=[],cell='',mode='plain',started=false;
+      const endCell=()=>{row.push(cell);cell='';mode='plain';};
+      const endRow=()=>{endCell();rows.push(row);row=[];started=false;if(rows.length>10001)throw Error('Limit exceeded: 10,000 data records.');};
+      for(let i=0;i<text.length;i++){
+        const c=text[i];started=true;
+        if(mode==='quoted'){if(c==='"'){if(text[i+1]==='"'){cell+='"';i++;}else mode='closed';}else cell+=c;}
+        else if(c===','){endCell();if(row.length>=100)throw Error('Limit exceeded: 100 columns.');}
+        else if(c==='\r'||c==='\n'){if(c==='\r'&&text[i+1]==='\n')i++;endRow();}
+        else if(mode==='closed')throw Error('Unexpected character after a closing quote. Use comma-delimited CSV.');
+        else if(c==='"'){if(cell.length)throw Error('A quote inside an unquoted value is invalid.');mode='quoted';}
+        else cell+=c;
+      }
+      if(mode==='quoted')throw Error('An opening quote has no closing quote.');if(started||row.length||cell.length)endRow();return rows;
+    }
+    function analyze(text){
+      if(new TextEncoder().encode(text).length>MAX_FILE)throw Error('Input exceeds 5 MB.');
+      const rows=parseCSV(text),header=rows.shift();if(!header||!header.length||header.some(v=>!v))throw Error('Column names must be nonempty.');
+      const risks=[];rows.forEach((row,index)=>{if(row.length!==header.length)throw Error(`Data record ${index+1}: expected ${header.length} columns, got ${row.length}.`);row.forEach((value,column)=>{const lead=value.replace(/^\s+/u,'').charAt(0);if('=+-@'.includes(lead)&&lead){risks.push({record:index+1,column:header[column],marker:lead,preview:value.slice(0,80)});}});});return {records:rows.length,risks};
+    }
+    function reset(message='Input changed. Run the check again.'){$('result').style.display='none';$('status').className='status';$('status').textContent=message;}
+    $('source').addEventListener('input',()=>{fileSerial++;reset();});$('demo').addEventListener('click',()=>{fileSerial++;$('file').value='';$('source').value=demo;reset('Synthetic example loaded. Four cells will be flagged, including a negative number for manual review.');});
+    async function loadFile(){const serial=++fileSerial,file=$('file').files[0];$('source').value='';reset();if(!file)return;try{if(file.size>MAX_FILE)throw Error('File exceeds 5 MB.');const data=await file.arrayBuffer();if(serial!==fileSerial)return;$('source').value=new TextDecoder($('encoding').value,{fatal:true}).decode(data);reset(`Loaded ${file.name}. Run the formula-risk check.`);}catch(error){if(serial===fileSerial){$('status').className='status error';$('status').textContent=`Could not read file: ${error.message}`;}}}
+    $('file').addEventListener('change',loadFile);$('encoding').addEventListener('change',loadFile);
+    $('run').addEventListener('click',()=>{try{const result=analyze($('source').value);$('record-count').textContent=result.records;$('risk-count').textContent=result.risks.length;const box=$('risk-list');box.replaceChildren();if(!result.risks.length){box.textContent='No formula-like cells were found by this conservative check.';}else{const table=document.createElement('table');table.innerHTML='<thead><tr><th>Record</th><th>Column</th><th>Marker</th><th>Preview</th></tr></thead>';const body=document.createElement('tbody');result.risks.slice(0,50).forEach(item=>{const tr=document.createElement('tr');[item.record,item.column,item.marker,item.preview].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.appendChild(td);});body.appendChild(tr);});table.appendChild(body);box.appendChild(table);if(result.risks.length>50){const note=document.createElement('p');note.className='muted';note.textContent=`Showing 50 of ${result.risks.length} flagged cells.`;box.appendChild(note);}}$('result').style.display='block';$('status').className='status';$('status').textContent='Local check complete. No formulas were executed and the original file was not changed.';}catch(error){$('result').style.display='none';$('status').className='status error';$('status').textContent=error.message;}});
+  })();
+  </script>
+</body>
+</html>
