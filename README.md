@@ -38,7 +38,7 @@ Need a repaired copy rather than a report? The [CSV Formula Safety Fix](https://
 
 ## Free CSV reconciliation checker and fixed USD 29 service
 
-[Compare two CSV files locally](https://joysky77.github.io/csv-cleanup-services/csv-reconciliation-checker.html) by one exact, nonempty, unique key. The free browser checker reports unmatched keys and changed values in shared columns without uploading either file.
+[Download the fixed version 1.0.0 HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/reconciliation-checker-v1.0.0/CSV-Reconciliation-Checker-v1.0.0.html) or [compare two CSV files locally](https://joysky77.github.io/csv-cleanup-services/csv-reconciliation-checker.html) by one exact, nonempty, unique key. The free browser checker reports unmatched keys and changed values in shared columns without uploading either file.
 
 For a reproducible delivery package, the [CSV Reconciliation Service](https://joysky77.github.io/csv-cleanup-services/csv-reconciliation-service.html) accepts two comma-delimited CSV files, each up to 20,000 rows and 50 columns. The fixed USD 29 scope includes left-only and right-only key CSVs, a changed-cell CSV, a JSON report with source hashes, and the Python script used. [Open a scope request](https://github.com/joysky77/csv-cleanup-services/issues/new?template=reconciliation-request.yml) with fictional examples only.
 
