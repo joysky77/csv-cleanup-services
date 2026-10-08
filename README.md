@@ -18,6 +18,8 @@ Optional support for the public tools is available through the repository Sponso
 
 Need to count repeated records first? [Download the fixed version 1.0.0 HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/duplicate-checker-v1.0.0/CSV-Duplicate-Row-Checker-v1.0.0.html) or [run the free local CSV duplicate-row checker](https://joysky77.github.io/csv-cleanup-services/csv-duplicate-checker.html). It reports exact duplicate data-record numbers without uploading or changing the file.
 
+Read [how to remove duplicate rows from a CSV offline](https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline.html) or the [中文说明](https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline-zh.html) before deleting records. The guides distinguish exact duplicates from business-key matches and explain source preservation, quoted fields, leading zeros, change reports, and output validation.
+
 Need to review formula-like cells before opening a CSV in a spreadsheet? [Download the fixed version 1.1.0 HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/formula-risk-checker-v1.1.0/CSV-Formula-Risk-Checker-v1.1.0.html) or [run the free local formula-risk checker](https://joysky77.github.io/csv-cleanup-services/csv-formula-risk-checker.html). It reports conservative locations and previews without uploading, executing formulas or changing the source file.
 
 Read the source-linked [CSV formula injection prevention guide](https://joysky77.github.io/csv-cleanup-services/prevent-csv-formula-injection.html) or its [中文说明](https://joysky77.github.io/csv-cleanup-services/csv-formula-injection-prevention-zh.html) for a practical review checklist, mitigation limits and links to OWASP and MITRE CWE-1236.
@@ -100,3 +102,4 @@ Before paying, email yangy0077@gmail.com with “Delivery Workbench inquiry” a
 Download is delivered after payment verification. This is an independent local planning tool; it does not approve staffing, funding, procurement or deployment, and is not endorsed by an external platform.
 
 ![Synthetic example in the local workbench](delivery-workbench-v0.4.1-preview.png)
+
