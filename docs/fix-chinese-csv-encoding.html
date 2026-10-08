@@ -6,6 +6,9 @@
   <meta name="description" content="A safe workflow for fixing Chinese CSV mojibake, choosing UTF-8 or GB18030, preserving leading-zero IDs, and producing an Excel-friendly UTF-8 BOM file.">
   <title>Fix Chinese CSV encoding: UTF-8, GB18030, and Excel mojibake</title>
   <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html">
+  <link rel="alternate" hreflang="en" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding-zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html">
   <meta property="og:title" content="Fix Chinese CSV encoding without damaging the data">
   <meta property="og:description" content="Identify UTF-8 or GB18030 correctly, preserve identifiers, and export an Excel-friendly UTF-8 BOM CSV.">
   <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html">
@@ -57,7 +60,7 @@
 </head>
 <body>
   <main>
-    <nav><a href="./">← CSV Desk</a></nav>
+    <nav><a href="./">← CSV Desk</a> · <a href="fix-chinese-csv-encoding-zh.html" lang="zh-CN">中文</a></nav>
     <article>
       <h1>Fix Chinese CSV encoding without damaging the data</h1>
       <p class="lead">When Chinese names turn into symbols or strings such as <code>ä¸­æ–‡</code>, the text usually has not “changed language.” The bytes were decoded with the wrong character encoding. The safe fix is to identify the source encoding, decode once, and write a separate verified output.</p>
@@ -123,7 +126,7 @@ target.write_text(text, encoding="utf-8-sig", errors="strict")</code></pre>
 
       <p><small>Disclosure: this guide and the linked software were produced with AI assistance and browser-tested. Encoding selection still requires verification against the source system and representative records.</small></p>
     </article>
-    <footer>CSV Desk 1.0.0 · Also read <a href="how-to-clean-csv-offline.html">the offline CSV cleanup checklist</a> · <a href="./">Product page</a></footer>
+    <footer>CSV Desk 1.0.0 · <a href="fix-chinese-csv-encoding-zh.html" lang="zh-CN">中文指南</a> · Also read <a href="how-to-clean-csv-offline.html">the offline CSV cleanup checklist</a> · <a href="./">Product page</a></footer>
   </main>
 </body>
 </html>

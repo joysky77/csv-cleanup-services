@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="在本地判断 CSV 是 UTF-8 还是 GB18030，修复 Excel 中文乱码，保留前导零编号，并导出带 BOM 的 UTF-8 副本。">
+  <title>CSV 中文乱码怎么修复：UTF-8、GB18030 与 Excel 导入</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding-zh.html">
+  <link rel="alternate" hreflang="en" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding-zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html">
+  <meta property="og:title" content="修复 CSV 中文乱码，不覆盖原始文件">
+  <meta property="og:description" content="确认 UTF-8 或 GB18030 后再转换，并检查编号、列数和引号字段。">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding-zh.html">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"TechArticle",
+        "headline":"CSV 中文乱码怎么修复：UTF-8、GB18030 与 Excel 导入",
+        "description":"在不覆盖源文件的前提下判断 CSV 编码、修复中文乱码并验证表格结构。",
+        "inLanguage":"zh-CN",
+        "datePublished":"2026-10-09",
+        "dateModified":"2026-10-09",
+        "mainEntityOfPage":"https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding-zh.html",
+        "author":{"@type":"Organization","name":"JoySky Tools"}
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"CSV 里的中文为什么会变成乱码？","acceptedAnswer":{"@type":"Answer","text":"创建文件和打开文件的软件使用了不同的字符编码。常见情况是把 UTF-8 当成旧版 Windows 编码读取，或者把 GB18030 当成 UTF-8 读取。"}},
+          {"@type":"Question","name":"把文件改名或换成 txt 后缀能修好吗？","acceptedAnswer":{"@type":"Answer","text":"不能。改名不会改变文件里的字节。应先用正确的源编码解码，再把内容写入新的目标文件。"}},
+          {"@type":"Question","name":"为什么给 Excel 使用的 UTF-8 CSV 常带 BOM？","acceptedAnswer":{"@type":"Answer","text":"BOM 能给不少 Windows 版 Excel 工作流提供明确的 UTF-8 提示。它并非所有系统都需要，仍应在实际导入软件中验证。"}}
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root{color-scheme:light;--ink:#10251f;--muted:#52635e;--paper:#f6f3eb;--card:#fffdf7;--accent:#146b52;--line:#d8ded8}
+    *{box-sizing:border-box}body{margin:0;font:17px/1.78 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--paper)}
+    main{width:min(840px,calc(100% - 32px));margin:auto;padding:56px 0 72px}nav a,footer a{color:var(--accent);font-weight:700;text-decoration:none}
+    h1{font-size:clamp(2.3rem,7vw,4rem);line-height:1.08;letter-spacing:-.04em;margin:1.4rem 0}h2{margin-top:2.4rem;line-height:1.3}.lead{color:var(--muted);font-size:1.18rem}
+    .callout,.cta,.faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin:24px 0}.cta{border-color:#9fc3b7}
+    .button{display:inline-block;color:#fff;background:var(--accent);padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:750;margin:.4rem .5rem .2rem 0}.secondary{color:var(--ink);background:transparent;border:1px solid var(--line)}
+    code{background:#e9ede8;border-radius:4px;padding:.1em .3em}pre{overflow:auto;background:#e9ede8;border-radius:8px;padding:16px;font-size:.9rem}li{margin:.45rem 0}summary{cursor:pointer;font-weight:750}.faq details p{margin:.7rem 0 0;color:var(--muted)}footer{border-top:1px solid var(--line);margin-top:50px;padding-top:22px;color:var(--muted);font-size:.9rem}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="./">← CSV Desk</a> · <a href="fix-chinese-csv-encoding.html" lang="en">English</a></nav>
+    <article>
+      <h1>修复 CSV 中文乱码，先确认编码</h1>
+      <p class="lead">中文姓名变成符号，或者显示成 <code>ä¸­æ–‡</code> 一类文字时，通常不是内容被“翻译”了，而是软件用错了字符编码。稳妥的处理方法是保留源文件，确认 UTF-8 或 GB18030，再另存一份经过验证的副本。</p>
+
+      <div class="callout"><strong>不要覆盖原文件。</strong>编码选错后继续保存，可能把错误字符重新写进文件。先复制一份，再做判断、转换和抽样核对。</div>
+
+      <h2>乱码是怎样产生的</h2>
+      <p>CSV 本质上是一串字节，字符编码负责把字节解释成文字。UTF-8 可以表示 Unicode 字符；GB18030 常见于中国大陆的 Windows 软件和较早的业务系统导出。两者都能保存中文，但同一组字节按照不同编码读取，结果会完全不同。</p>
+      <p>改文件名、换后缀或者更换字体，都不会转换文件里的字节。反复试着打开并保存，也可能把本来还能恢复的内容变成新的错误数据。</p>
+
+      <h2>先判断，再转换</h2>
+      <p>先检查文件开头是否有 UTF-8 BOM。没有 BOM 的文件仍可能是 UTF-8。如果严格 UTF-8 解码失败，而且文件来自中文 Windows 软件，可以把 GB18030 作为候选继续验证。</p>
+      <p>检测工具只能提供线索，不能判断客户姓名或地址是否正确。应挑选几条已知记录，检查常用汉字、生僻字、中文标点和中英文混排内容。软件没有报错，只能说明字节可以解码；样本内容可读且符合预期，证据才更充分。</p>
+
+      <div class="cta">
+        <strong>先用免费工具检查。</strong>
+        <p>编码检查器只读取文件开头的一小部分，所有处理都在当前浏览器完成，不上传 CSV。</p>
+        <a class="button" href="csv-encoding-checker.html">打开免费编码检查器</a>
+      </div>
+
+      <h2>只解码一次，再编码一次</h2>
+      <p>转换分成两步：按照已确认的源编码读取，再按照目标编码写入新文件。下面的 Python 示例会在遇到无法解码的内容时停止，不会静默替换字符：</p>
+      <pre><code>from pathlib import Path
+
+source = Path("export-original.csv")
+target = Path("export-utf8-bom.csv")
+
+text = source.read_text(encoding="gb18030", errors="strict")
+target.write_text(text, encoding="utf-8-sig", errors="strict")</code></pre>
+      <p>如果源文件已经确认是 UTF-8，就把读取编码改为 <code>utf-8</code>。目标编码 <code>utf-8-sig</code> 会写入带 BOM 的 UTF-8，许多 Windows 版 Excel 工作流更容易正确识别。这个例子只处理字符编码，不检查列数、重复行、带引号换行或公式风险。</p>
+
+      <h2>前导零要按文本保留</h2>
+      <p>编码正确，不代表 Excel 不会改动数据。表格软件仍可能把 <code>001234</code> 显示成 <code>1234</code>，把长编号转成科学计数法，或者把某些值猜成日期。客户编号、邮政编码、电话号码、发票号和商品编码，通常应按文本导入，除非业务规则明确要求数值类型。</p>
+      <p>可以通过 Excel 的导入功能选择 UTF-8，并把编号列指定为文本。若文件最终交给其他系统，也要用那个系统实际导入一次。文本编辑器里显示正常，并不能证明下游软件不会重新解释字段。</p>
+
+      <h2>转换后检查表格结构</h2>
+      <p>不要用“按行拆分、按逗号拆分”的简单方法验证 CSV。带引号字段可以包含逗号、双引号和换行。至少检查以下内容：</p>
+      <ul>
+        <li>表头和预期列数没有变化；</li>
+        <li>源文件与输出文件的记录数一致；</li>
+        <li>中文姓名、地址和标点可读；</li>
+        <li>带引号的逗号仍留在原字段中；</li>
+        <li>带前导零的编号没有丢失；</li>
+        <li>没有意外出现替换字符 <code>�</code>；</li>
+        <li>原文件的哈希和修改时间保持不变。</li>
+      </ul>
+      <p>抽样时可包含首行、末行、生僻字、带逗号的地址和前导零编号。记录源编码、目标编码、输入输出行数和额外清理规则，后续复核会更容易。</p>
+
+      <h2>什么时候使用 UTF-8 BOM</h2>
+      <p>BOM 不是 UTF-8 的必需部分。它在不少 Windows 表格工作流中能减少错误猜测，但有些导入系统明确要求不带 BOM。最终选择应以接收软件的规范和实际测试为准。</p>
+      <p>BOM 也不能证明 CSV 结构正确。它只说明文件希望按照 UTF-8 读取，与分隔符、引号、记录数和业务规则无关。</p>
+
+      <h2>私密文件适合留在本机处理</h2>
+      <p>客户导出文件可能包含个人信息或商业数据。上传到陌生转换网站，会产生新的数据副本。CSV Desk 在 Microsoft Edge 中本地运行，支持 UTF-8 和 GB18030 输入，另存带 BOM 的 UTF-8 CSV，并生成 JSON 变更报告。原文件不会被覆盖。</p>
+
+      <div class="cta">
+        <strong>根据文件情况选择处理方式。</strong>
+        <p>小文件可以用 CSV Desk 重复执行本地清理；如果编码、重复规则或验收标准需要先确认，可以通过固定范围服务询价。</p>
+        <a class="button" href="https://joysky7777.itch.io/csv-desk/purchase">购买 CSV Desk · 9 美元</a>
+        <a class="button secondary" href="csv-cleanup-service-zh.html">查看 CSV 整理服务 · 25 美元</a>
+      </div>
+
+      <section class="faq" aria-labelledby="faq-title">
+        <h2 id="faq-title">常见问题</h2>
+        <details><summary>CSV 里的中文为什么会变成乱码？</summary><p>打开文件的软件使用了错误的编码。需要按照已确认的源编码读取原始字节，再另存为目标编码。</p></details>
+        <details><summary>把文件改名或换成 txt 后缀能修好吗？</summary><p>不能。文件名和后缀不会改变字节编码，必须完成一次正确的解码和编码。</p></details>
+        <details><summary>所有 UTF-8 CSV 都应该带 BOM 吗？</summary><p>不一定。Windows 版 Excel 经常能从 BOM 获得明确提示，但部分导入器要求纯 UTF-8。应以实际接收软件为准。</p></details>
+      </section>
+
+      <p><small>说明：本指南和所链接的软件由 AI 辅助制作，并经过浏览器验证。编码选择仍需结合来源系统和代表性记录核对。</small></p>
+    </article>
+    <footer>CSV Desk 1.0.0 · <a href="fix-chinese-csv-encoding.html" lang="en">English guide</a> · <a href="csv-desk-zh.html">中文产品页</a> · <a href="./">返回首页</a></footer>
+  </main>
+</body>
+</html>
