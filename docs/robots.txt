@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://joysky77.github.io/csv-cleanup-services/sitemap.xml
