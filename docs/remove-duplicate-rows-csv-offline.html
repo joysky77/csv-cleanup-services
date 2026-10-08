@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn how to find and remove exact duplicate rows from a CSV locally without uploading the file or damaging IDs, quoted fields, and multiline records.">
+  <title>How to remove duplicate rows from a CSV offline</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline.html">
+  <meta property="og:title" content="How to remove duplicate rows from a CSV offline">
+  <meta property="og:description" content="A safe local workflow for exact-row deduplication, validation, and reviewable output.">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline.html">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"TechArticle",
+        "headline":"How to remove duplicate rows from a CSV offline",
+        "description":"A safe local workflow for finding and removing exact duplicate CSV rows while preserving the source file, identifiers, quoted fields, and multiline records.",
+        "datePublished":"2026-10-09",
+        "dateModified":"2026-10-09",
+        "mainEntityOfPage":"https://joysky77.github.io/csv-cleanup-services/remove-duplicate-rows-csv-offline.html",
+        "author":{"@type":"Organization","name":"JoySky Tools"}
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"What counts as an exact duplicate CSV row?","acceptedAnswer":{"@type":"Answer","text":"Two parsed data rows are exact duplicates only when they contain the same number of columns and every corresponding value matches. Letter case, spaces, leading zeros, and numeric formatting remain significant unless a separate normalization rule is agreed first."}},
+          {"@type":"Question","name":"Can a CSV be checked for duplicates without uploading it?","acceptedAnswer":{"@type":"Answer","text":"Yes. A local browser tool can read the file in memory, report exact duplicates, and keep the data on the device when the tool has no network or upload code."}},
+          {"@type":"Question","name":"Should duplicate rows be removed by email address or customer ID?","acceptedAnswer":{"@type":"Answer","text":"Only when the business rule defines that key and says which record survives. Matching one field can merge distinct orders or historical records, so key-based deduplication needs an explicit survivor rule."}}
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root{color-scheme:light;--ink:#152137;--muted:#566176;--paper:#f5f7fb;--card:#fff;--accent:#2455d6;--line:#d8dfeb;--soft:#eaf0ff}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.72 system-ui,-apple-system,"Segoe UI",sans-serif}main{width:min(840px,calc(100% - 32px));margin:auto;padding:48px 0 70px}nav a,footer a{color:var(--accent);font-weight:700;text-decoration:none}h1{font-size:clamp(2.35rem,7vw,4.35rem);line-height:1.03;letter-spacing:-.045em;margin:1.4rem 0}h2{margin-top:2.5rem;line-height:1.2}.lead{color:var(--muted);font-size:1.2rem}.callout,.cta{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:28px 0}.callout{border-left:5px solid var(--accent)}.example{background:var(--soft);border-radius:10px;padding:16px 18px;overflow:auto}.button{display:inline-block;color:white;background:var(--accent);padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:750;margin:.4rem .5rem .2rem 0}.secondary{color:var(--ink);background:transparent;border:1px solid var(--line)}code{background:#e9edf5;border-radius:4px;padding:.1em .3em}li{margin:.45rem 0}details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}summary{cursor:pointer;font-weight:750}footer{border-top:1px solid var(--line);margin-top:48px;padding-top:22px;color:var(--muted);font-size:.9rem}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="./">← CSV Desk</a></nav>
+    <article>
+      <h1>How to remove duplicate rows from a CSV offline</h1>
+      <p class="lead">The safe way to deduplicate a CSV is to define what “duplicate” means, parse the file correctly, keep the original untouched, and verify the rows removed. For many small exports, this can be done entirely on your computer.</p>
+
+      <div class="callout"><strong>Use the narrowest automatic rule first:</strong> remove only rows that match across every parsed column. A shared name, email address, or customer ID does not prove that two full records are interchangeable.</div>
+
+      <h2>Exact duplicates and business duplicates are different</h2>
+      <p>An exact duplicate repeats the same complete row. If every value matches, keeping both copies usually adds no information. A business duplicate is an interpretation: two rows may refer to the same customer, product, invoice, or event even though some values differ.</p>
+      <div class="example"><code>001,"Ada Chen",ada@example.com,2026-10-01</code><br><code>001,"Ada Chen",ada@example.com,2026-10-01</code><br><br>The second line is an exact duplicate of the first.<br><br><code>001,"Ada Chen",ada@example.com,2026-10-02</code><br>This is not exact: the date differs, and removing it may erase a later event.</div>
+      <p>Key-based rules can still be useful, but they need two decisions: the columns that form the key and the rule that selects the surviving row. “For each order ID, keep the newest timestamp” is specific. “Remove duplicate customers” is not.</p>
+
+      <h2>1. Preserve the source file</h2>
+      <p>Make the cleaned file a separate output. Do not save over the original, even when the task looks routine. The source is the only reliable reference if the duplicate definition was wrong, the encoding was misread, or a later import rejects the result.</p>
+      <p>Record the input filename, chosen encoding, number of data rows, number of unique rows, and removed record numbers. These details make the cleanup reviewable without copying the full dataset into a report.</p>
+
+      <h2>2. Parse CSV rather than splitting on commas or lines</h2>
+      <p>CSV syntax allows commas, quotation marks, and line breaks inside quoted fields. A row such as <code>17,"Chen, Mei","Line one&#10;Line two"</code> is one record with three columns. Splitting on commas creates four pieces; splitting on line breaks creates two records. Either mistake can produce false duplicate matches or corrupt the output.</p>
+      <p>Use a parser that understands quoted fields and escaped quotes. Reject malformed records clearly instead of guessing how cells should shift. Confirm that each parsed data row has the same number of columns as the header.</p>
+
+      <h2>3. Decide whether normalization happens before comparison</h2>
+      <p>An exact comparison treats these values as different:</p>
+      <ul>
+        <li><code>001</code> and <code>1</code>;</li>
+        <li><code>Ada</code> and <code>ada</code>;</li>
+        <li><code>Sales</code> and <code>Sales </code>;</li>
+        <li>an empty field and a field containing one space.</li>
+      </ul>
+      <p>That strictness is useful because it avoids inventing equivalence. If surrounding whitespace should be ignored, trim it as an explicit cleanup step and report the changed positions. Do not silently convert numeric-looking identifiers to numbers: postal codes, invoice references, product codes, and account IDs may require leading zeros.</p>
+
+      <h2>4. Check before removing</h2>
+      <p>Run a detection-only pass first. Review the number of duplicates and a short list of record positions. An unexpectedly large count often reveals a wrong delimiter, missing header, incorrect encoding, or a business rule that needs clarification.</p>
+      <p>The free local checker below reports exact duplicate record numbers without changing the file. It treats the first row as the header and keeps letter case, spaces, and numeric formatting significant.</p>
+      <div class="cta">
+        <strong>Check a file locally before you remove anything.</strong>
+        <p>The free checker works in the browser tab and has no upload, account, analytics, or runtime AI. Limits: 5 MB, 10,000 data records, 100 columns, comma-delimited CSV.</p>
+        <a class="button" href="csv-duplicate-checker.html">Open the free duplicate checker</a>
+      </div>
+
+      <h2>5. Remove only later copies and create evidence</h2>
+      <p>For exact-row deduplication, keep the first occurrence and omit later identical rows. This preserves the original order and gives every removed row a clear reference to the first matching record. Write a new CSV using the same header and a documented output encoding.</p>
+      <p>A compact report can list the input count, output count, duplicate count, removed record numbers, and the first matching record for each removal. It should not expose entire private records unless the operator specifically needs that evidence.</p>
+
+      <h2>6. Validate the cleaned CSV</h2>
+      <p>After writing the result, parse it again and verify:</p>
+      <ul>
+        <li>the header and column count remain unchanged;</li>
+        <li>the output row count equals input rows minus reported duplicates;</li>
+        <li>no exact duplicate remains;</li>
+        <li>quoted commas, quotes, and multiline fields survive;</li>
+        <li>leading zeros and text identifiers remain intact;</li>
+        <li>Chinese and other non-ASCII text is readable;</li>
+        <li>the original file has not changed.</li>
+      </ul>
+      <p>Spot-check the first and last records, one multiline record, one non-ASCII value, and one identifier with leading zeros. A successful parse proves structural validity; targeted review checks the meaning that structure alone cannot protect.</p>
+
+      <h2>When exact matching is not enough</h2>
+      <p>Do not automatically merge near matches such as <code>Acme Ltd</code> and <code>ACME Limited</code>, or two customer rows sharing an email but carrying different order histories. These cases require an agreed key, normalization rules, and a survivor policy. Sometimes the correct output is a review queue rather than deletion.</p>
+
+      <div class="cta">
+        <strong>Need a cleaned output instead of a report?</strong>
+        <p>CSV Desk removes exact duplicate rows locally and exports a separate UTF-8 BOM CSV plus a JSON change report. For a rule that needs agreement or a one-off delivery, use the fixed-scope service.</p>
+        <a class="button" href="https://joysky7777.itch.io/csv-desk/purchase">Buy CSV Desk for $9</a>
+        <a class="button secondary" href="csv-cleanup-service.html">Review the $25 cleanup service</a>
+      </div>
+
+      <h2>Frequently asked questions</h2>
+      <details><summary>What counts as an exact duplicate CSV row?</summary><p>Two parsed data rows must contain the same number of columns and every corresponding value must match. Case, spaces, leading zeros, and formatting remain significant unless a separate normalization rule is applied first.</p></details>
+      <details><summary>Can I check duplicates without uploading the CSV?</summary><p>Yes. A local browser tool can read and compare the file in memory. The linked free checker contains no upload or runtime network code.</p></details>
+      <details><summary>Should I deduplicate using email or customer ID?</summary><p>Only after defining that key and deciding which record survives. One matching field may connect distinct orders or historical events, so key-based deletion needs a specific business rule.</p></details>
+
+      <p><small>Disclosure: this guide, the linked software, and documentation were produced with AI assistance and browser-tested. The workflow deliberately favors conservative, reviewable changes; it does not claim to identify every real-world duplicate automatically.</small></p>
+    </article>
+    <footer>JoySky Tools · <a href="csv-duplicate-checker.html">Free duplicate checker</a> · <a href="./">CSV Desk</a></footer>
+  </main>
+</body>
+</html>
