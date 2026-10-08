@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="固定范围CSV整理服务：检查UTF-8或GB18030编码，清理首尾空格，按约定规则检查重复，交付结果文件、可复现脚本和变更报告。拟报价25美元。">
+  <title>小型CSV整理服务｜结果文件、脚本和变更报告</title>
+  <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service-zh.html">
+  <link rel="alternate" hreflang="en" href="https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service-zh.html">
+  <meta property="og:title" content="小型CSV整理服务｜规则明确，结果可核对">
+  <meta property="og:description" content="一份CSV，按约定规则整理，交付结果文件、Python脚本和变更报告。拟报价25美元。">
+  <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service-zh.html">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "name": "小型CSV整理服务",
+        "serviceType": "固定范围CSV数据整理",
+        "description": "整理一份小型CSV，按约定规则处理首尾空格和重复记录，交付结果文件、可复现脚本和变更报告。",
+        "url": "https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service-zh.html",
+        "provider": {"@type": "Organization", "name": "JoySky Tools"},
+        "areaServed": "Worldwide",
+        "offers": {
+          "@type": "Offer",
+          "price": "25.00",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://github.com/joysky77/csv-cleanup-services/issues/new?template=quote-request-zh.yml"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {"@type":"Question","name":"25美元拟报价包含哪些内容？","acceptedAnswer":{"@type":"Answer","text":"整理一份不超过2万行、20列的CSV，支持UTF-8或GB18030输入；处理首尾空格和一项事先约定的重复规则，交付整理后的CSV、可复现Python脚本、变更报告，并包含一次约定范围内的修正。"}},
+          {"@type":"Question","name":"可以在公开询价中上传真实客户资料吗？","acceptedAnswer":{"@type":"Answer","text":"不可以。公开询价只能使用虚构示例。真实文件的私下传输和数据处理方式，需要在接受订单前另行约定。"}},
+          {"@type":"Question","name":"什么时候付款？","acceptedAnswer":{"@type":"Answer","text":"先确认文件范围、整理规则、验收标准、交付时间、私下传输方式和付款安排，确认接受订单后再付款。"}}
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root { color-scheme:light; --ink:#10251f; --muted:#52635e; --paper:#f6f3eb; --card:#fffdf7; --accent:#146b52; --line:#d8ded8; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.72 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; color:var(--ink); background:var(--paper); }
+    main { width:min(1000px,calc(100% - 32px)); margin:auto; }
+    nav { display:flex; justify-content:space-between; gap:16px; padding-top:28px; } nav a { color:var(--accent); text-decoration:none; font-weight:700; }
+    .hero { padding:58px 0 42px; max-width:830px; }
+    .eyebrow { color:var(--accent); font-weight:800; letter-spacing:.06em; font-size:.82rem; }
+    h1 { font-size:clamp(2.45rem,7vw,4.8rem); line-height:1.06; letter-spacing:-.045em; margin:.5rem 0 1.1rem; }
+    h2 { line-height:1.25; }
+    .lead { color:var(--muted); font-size:1.2rem; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; margin:25px 0 10px; }
+    .button { display:inline-block; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:750; }
+    .primary { color:white; background:var(--accent); }
+    .secondary { color:var(--ink); background:var(--card); border:1px solid var(--line); }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:10px 0 50px; }
+    .card,details,.notice { background:var(--card); border:1px solid var(--line); border-radius:11px; padding:20px; }
+    .card h2 { font-size:1.05rem; margin:0 0 7px; }
+    .card p,.muted,details p { color:var(--muted); }
+    .scope { border-top:1px solid var(--line); padding:34px 0 48px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+    .notice { margin-bottom:48px; border-color:#9fc3b7; }
+    .faq { border-top:1px solid var(--line); padding:34px 0 60px; }
+    details { margin:10px 0; padding:14px 18px; } summary { cursor:pointer; font-weight:750; } details p { margin:.6rem 0 0; }
+    footer { border-top:1px solid var(--line); padding:22px 0 36px; color:var(--muted); font-size:.88rem; }
+    @media(max-width:760px){.grid,.scope{grid-template-columns:1fr}.hero{padding-top:38px}nav{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <main>
+    <nav><a href="./">← JoySky Tools</a><a href="csv-cleanup-service.html" lang="en">English</a></nav>
+    <section class="hero">
+      <div class="eyebrow">固定范围 · 拟报价25美元</div>
+      <h1>按明确规则整理一份CSV，结果可以逐项核对。</h1>
+      <p class="lead">交付整理后的CSV、可复现的Python脚本和前后变化报告。处理时保留编号前导零、带逗号的字段和中文内容，原始文件不被覆盖。</p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/joysky77/csv-cleanup-services/issues/new?template=quote-request-zh.yml">提交中文询价</a>
+        <a class="button secondary" href="demo.html">查看虚构样例</a>
+        <a class="button secondary" href="fix-chinese-csv-encoding.html">查看中文乱码处理说明</a>
+      </div>
+      <p class="muted">公开询价只能使用虚构示例。提交询价不等于下单；双方确认范围后才会要求付款。</p>
+    </section>
+
+    <section class="grid" aria-label="服务交付内容">
+      <article class="card"><h2>结果经过检查</h2><p>支持UTF-8或GB18030输入，检查列数，保留文本编号，另存新的结果文件。</p></article>
+      <article class="card"><h2>重复规则先确认</h2><p>演示默认只删除所有字段完全一致的行。按订单号等业务字段判断时，先写清保留规则。</p></article>
+      <article class="card"><h2>过程可以复现</h2><p>除结果文件外，还会交付实际运行的脚本和JSON报告，记录数量与变化。</p></article>
+    </section>
+
+    <section class="scope">
+      <div>
+        <h2>25美元拟报价范围</h2>
+        <ul>
+          <li>一份CSV，最多2万行、20列</li>
+          <li>UTF-8或GB18030输入</li>
+          <li>清理字段首尾空格</li>
+          <li>一项明确约定的重复判断规则</li>
+          <li>约定范围内一次修正</li>
+        </ul>
+      </div>
+      <div>
+        <h2>接受订单前先确认</h2>
+        <p>双方先确认具体处理规则、验收标准、交付时间、真实文件的私下传输方式、交付方式和付款安排。XLSX转换、自动推测业务规则、资料补充、联网查询或增加其他数据集，需要单独报价。</p>
+      </div>
+    </section>
+
+    <div class="notice"><strong>隐私边界：</strong>请勿在GitHub公开页面上传客户资料、个人信息、账号密码或付款信息。公开询价只填写大致行列数量、规则说明和虚构示例。真实文件如何私下传输和处理，需要在接受订单前另行约定。</div>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">询价前常见问题</h2>
+      <details><summary>25美元拟报价具体包括什么？</summary><p>包括一份符合上述大小限制的CSV、事先约定的整理工作、结果文件、可复现脚本、变更报告，以及约定范围内一次修正。</p></details>
+      <details><summary>可以把真实CSV传到公开询价里吗？</summary><p>不可以。请只用虚构示例。真实文件的传输和数据处理方式，需要在接受订单前确认。</p></details>
+      <details><summary>什么时候需要付款？</summary><p>文件范围、处理规则、验收标准、时间、私下传输方式、付款和交付安排全部确认后，接受订单时再付款。</p></details>
+    </section>
+
+    <footer>小型CSV整理服务 · 拟固定报价25美元 · 使用AI辅助开发并通过可复现检查交付</footer>
+  </main>
+</body>
+</html>
