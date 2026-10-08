@@ -18,6 +18,8 @@ Optional support for the public tools is available through the repository Sponso
 
 Need to count repeated records first? [Download the fixed version 1.0.0 HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/duplicate-checker-v1.0.0/CSV-Duplicate-Row-Checker-v1.0.0.html) or [run the free local CSV duplicate-row checker](https://joysky77.github.io/csv-cleanup-services/csv-duplicate-checker.html). It reports exact duplicate data-record numbers without uploading or changing the file.
 
+Need to review formula-like cells before opening a CSV in a spreadsheet? [Download the fixed version 1.0.0 HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/formula-risk-checker-v1.0.0/CSV-Formula-Risk-Checker-v1.0.0.html) or [run the free local formula-risk checker](https://joysky77.github.io/csv-cleanup-services/csv-formula-risk-checker.html). It reports conservative locations and previews without uploading, executing formulas or changing the source file.
+
 ## Request a quote
 
 [Review the full US$25 scope](https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html) or [open the short purchase inquiry form](https://github.com/joysky77/csv-cleanup-services/issues/new?template=quote-request.yml).
