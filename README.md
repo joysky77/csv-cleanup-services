@@ -14,6 +14,10 @@ The included demonstration implements exact duplicates across all columns. A dif
 
 [Download the versioned HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/encoding-checker-v1.0.0/CSV-Encoding-Checker-v1.0.0.html) or [run the web version](https://joysky77.github.io/csv-cleanup-services/csv-encoding-checker.html). It checks a CSV sample locally for strict UTF-8 or GB18030 decoding and previews Chinese text without uploading the selected file. The free checker diagnoses encoding only; CSV Desk adds cleanup and export.
 
+## CSV encoding repair guides
+
+Read the [English UTF-8 and GB18030 guide](https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding.html) or the [中文 CSV 乱码修复指南](https://joysky77.github.io/csv-cleanup-services/fix-chinese-csv-encoding-zh.html). Both explain how to preserve the original file, leading-zero identifiers and quoted CSV structure before using the free checker, the USD 9 offline tool or the fixed-scope service.
+
 Optional support for the public tools is available through the repository Sponsor button. Sponsorship is not a product purchase, service order or proof of income.
 
 Need to count repeated records first? [Download the fixed version 1.0.0 HTML file](https://github.com/joysky77/csv-cleanup-services/releases/download/duplicate-checker-v1.0.0/CSV-Duplicate-Row-Checker-v1.0.0.html) or [run the free local CSV duplicate-row checker](https://joysky77.github.io/csv-cleanup-services/csv-duplicate-checker.html). It reports exact duplicate data-record numbers without uploading or changing the file.
