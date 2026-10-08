@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="CSV Desk cleans small CSV files locally in your browser and exports a clear change report.">
+  <meta name="description" content="Clean CSV files offline: trim whitespace, remove exact duplicates, neutralize spreadsheet formulas, and export an audit report. One-time $9.">
   <title>CSV Desk — Private, offline CSV cleanup</title>
   <link rel="canonical" href="https://joysky77.github.io/csv-cleanup-services/">
   <meta property="og:title" content="CSV Desk — Private, offline CSV cleanup">
@@ -11,24 +11,56 @@
   <meta property="og:image" content="https://raw.githubusercontent.com/joysky77/csv-cleanup-services/main/assets/CSV-Desk-v1.0.0-preview.png">
   <meta property="og:url" content="https://joysky77.github.io/csv-cleanup-services/">
   <meta property="og:type" content="product">
+  <meta property="product:price:amount" content="9.00">
+  <meta property="product:price:currency" content="USD">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSV Desk — Private, offline CSV cleanup">
+  <meta name="twitter:description" content="Clean small CSV files locally, inspect every change, and export a separate result and audit report.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/joysky77/csv-cleanup-services/main/assets/CSV-Desk-v1.0.0-preview.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "CSV Desk",
-    "softwareVersion": "1.0.0",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Windows with Microsoft Edge",
-    "description": "Offline browser tool for conservative CSV cleanup and JSON change reporting.",
-    "url": "https://joysky77.github.io/csv-cleanup-services/",
-    "downloadUrl": "https://joysky7777.itch.io/csv-desk",
-    "offers": {
-      "@type": "Offer",
-      "price": "9.00",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "url": "https://joysky7777.itch.io/csv-desk"
-    }
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "CSV Desk",
+        "softwareVersion": "1.0.0",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Windows with Microsoft Edge",
+        "description": "Offline browser tool for conservative CSV cleanup and JSON change reporting.",
+        "url": "https://joysky77.github.io/csv-cleanup-services/",
+        "image": "https://raw.githubusercontent.com/joysky77/csv-cleanup-services/main/assets/CSV-Desk-v1.0.0-preview.png",
+        "featureList": "Local CSV processing, whitespace trimming, exact duplicate removal, formula neutralization, UTF-8 BOM export, JSON change report",
+        "downloadUrl": "https://joysky7777.itch.io/csv-desk",
+        "offers": {
+          "@type": "Offer",
+          "price": "9.00",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://joysky7777.itch.io/csv-desk/purchase"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does CSV Desk upload my data?",
+            "acceptedAnswer": {"@type": "Answer", "text": "No. The supplied HTML file runs locally in Microsoft Edge and makes no network requests while processing your CSV."}
+          },
+          {
+            "@type": "Question",
+            "name": "What changes does CSV Desk make?",
+            "acceptedAnswer": {"@type": "Answer", "text": "It trims surrounding whitespace, removes rows that are exact duplicates across every column, and can neutralize cells that begin like spreadsheet formulas. It exports a separate file and a JSON change report."}
+          },
+          {
+            "@type": "Question",
+            "name": "Does it support XLSX files?",
+            "acceptedAnswer": {"@type": "Answer", "text": "No. Version 1.0.0 accepts comma-delimited CSV files up to 5 MB, 10,000 data records, and 100 columns."}
+          }
+        ]
+      }
+    ]
   }
   </script>
   <style>
@@ -52,6 +84,11 @@
     .card p { margin:0; color:var(--muted); }
     .limits { border-top:1px solid var(--line); padding:36px 0 64px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
     .limits h2 { margin-top:0; }
+    .faq { border-top:1px solid var(--line); padding:36px 0 64px; }
+    .faq h2 { margin-top:0; }
+    details { background:var(--card); border:1px solid var(--line); border-radius:10px; margin:10px 0; padding:14px 18px; }
+    summary { cursor:pointer; font-weight:700; }
+    details p { margin:.65rem 0 0; color:var(--muted); }
     ul { padding-left:1.2rem; }
     footer { color:var(--muted); border-top:1px solid var(--line); padding:22px 0 36px; font-size:.88rem; }
     @media (max-width:760px) { .hero,.limits { grid-template-columns:1fr; gap:28px; } .hero { padding-top:44px; } .grid { grid-template-columns:1fr; } }
@@ -65,7 +102,7 @@
         <h1>Clean CSV files without uploading them.</h1>
         <p class="lead">Open one HTML file in Microsoft Edge, review every change, then save a separate cleaned CSV and JSON report. Your data stays on your computer.</p>
         <div class="actions">
-          <a class="button primary" href="https://joysky7777.itch.io/csv-desk">Buy CSV Desk for $9</a>
+          <a class="button primary" href="https://joysky7777.itch.io/csv-desk/purchase">Buy CSV Desk for $9</a>
           <a class="button secondary" href="demo.html">Try the sample</a>
           <a class="button secondary" href="https://github.com/joysky77/csv-cleanup-services">See the public demo</a>
         </div>
@@ -95,6 +132,13 @@
         <p>Comma-delimited CSV only, up to 5 MB, 10,000 data records, and 100 columns. CSV Desk does not convert XLSX files, infer business rules, or include custom cleanup services.</p>
         <p>Code and documentation were AI-generated and browser-tested. No independent human review is claimed.</p>
       </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions before buying</h2>
+      <details><summary>Does CSV Desk upload my data?</summary><p>No. The supplied HTML file runs locally in Microsoft Edge and makes no network requests while processing your CSV.</p></details>
+      <details><summary>What changes does it make?</summary><p>It trims surrounding whitespace, removes rows that are exact duplicates across every column, and can neutralize cells that begin like spreadsheet formulas. It writes a separate cleaned CSV and JSON change report.</p></details>
+      <details><summary>Does it support XLSX files?</summary><p>No. Version 1.0.0 accepts comma-delimited CSV files up to 5 MB, 10,000 data records, and 100 columns.</p></details>
     </section>
 
     <footer>CSV Desk 1.0.0 · Sold and delivered through itch.io · Platform refund rules and mandatory consumer rights apply.</footer>
