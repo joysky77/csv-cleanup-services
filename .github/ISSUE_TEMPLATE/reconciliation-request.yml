@@ -1,0 +1,42 @@
+name: CSV reconciliation service request
+description: Ask whether one two-file exact-key comparison fits the fixed USD 29 scope. Use fictional examples only.
+title: "[Reconciliation request] "
+labels: ["service inquiry"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not attach real customer files, credentials, payment details or private data. Use fictional examples only. Payment is requested only after the scope is accepted.
+  - type: input
+    id: dimensions
+    attributes:
+      label: File dimensions and encodings
+      description: Rows, columns, approximate size and UTF-8 or GB18030 for both files.
+      placeholder: "Left: 8,000 rows x 12 columns, UTF-8; Right: 8,100 rows x 12 columns, UTF-8"
+    validations: {required: true}
+  - type: input
+    id: key
+    attributes:
+      label: Exact key column
+      description: The nonempty, unique key present in both files.
+      placeholder: "invoice_id"
+    validations: {required: true}
+  - type: textarea
+    id: example
+    attributes:
+      label: Fictional example and desired result
+      description: Show invented rows and explain which shared columns should be compared.
+    validations: {required: true}
+  - type: input
+    id: deadline
+    attributes: {label: Desired deadline, placeholder: "2026-10-15 UTC+8"}
+    validations: {required: true}
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Data and payment boundary
+      options:
+        - label: I posted fictional examples only and will use the agreed private route for real files.
+          required: true
+        - label: I understand that PayPal payment is requested only after the scope is accepted.
+          required: true
