@@ -10,6 +10,8 @@ The included demonstration implements exact duplicates across all columns. A dif
 
 ## Request a quote
 
+[Review the full US$25 scope](https://joysky77.github.io/csv-cleanup-services/csv-cleanup-service.html) or [open the short purchase inquiry form](https://github.com/joysky77/csv-cleanup-services/issues/new?template=quote-request.yml).
+
 Open an issue with the approximate row/column counts, input encoding if known, desired transformation, duplicate rule and deadline. Use fictional examples only in public issues. Do not upload private customer files, credentials or payment details. Private sample exchange and data handling must be agreed separately.
 
 No payment is requested before scope and acceptance criteria are agreed. Direct orders may use PayPal after acceptance; orders originating on a marketplace follow that marketplace's payment rules. A proposal or demo is not an order or proof of earnings.
@@ -57,6 +59,8 @@ A separate [US$29 small-CSV offer](https://moltgate.com/yangy0077/clean-one-smal
 The download includes one standalone HTML tool, a synthetic example, instructions, and an internal-use license. Limits are 5 MB, 10,000 data records and 100 columns. It does not process XLSX files or provide custom cleanup work. Code and documentation were AI-generated and browser-tested; no independent human review is claimed.
 
 Price: USD 9 through itch.io. PayPal checkout is available on the public product page. Platform refund rules and mandatory consumer rights apply.
+
+[Buy CSV Desk for USD 9](https://joysky7777.itch.io/csv-desk/purchase) or [review the browser-verified product page](https://joysky77.github.io/csv-cleanup-services/).
 ---
 
 ### Delivery Workbench — $19 download
@@ -66,6 +70,8 @@ Turn a structured software-project brief into a source-linked delivery graph on 
 Includes Python source, a synthetic example, a setup guide, and internal commercial-use rights. Requires Python 3.10+ and a modern browser. No paid AI account or cloud hosting is needed. Rule-based recommendations require review; arbitrary documents are not automatically understood. The input format and naming rules are documented in the supplied example and README. AI assisted development is disclosed.
 
 Price: USD 19 for version 0.4.1. No subscription. Includes one setup troubleshooting exchange within seven days of delivery. Custom conversion, consulting and future upgrades are not included.
+
+[Review the full product scope](https://joysky77.github.io/csv-cleanup-services/delivery-workbench.html) or [open a purchase inquiry](https://github.com/joysky77/csv-cleanup-services/issues/new?template=delivery-workbench.yml).
 
 Before paying, email yangy0077@gmail.com with “Delivery Workbench inquiry” and your operating system. We will confirm compatibility, usage terms, payment instructions, and delivery arrangements. Please send no confidential project files. Payment is requested only after the order is agreed. Delivery uses the account owner's existing PayPal account and is confirmed by actual payment, not by screenshots supplied by a buyer.
 
